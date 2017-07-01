@@ -18,6 +18,19 @@ RUN apk add --no-cache -U --virtual .build-deps \
     git
 
 
+#  Migrate
+#-----------------------------------------------
+ENV MIGRATE_VERSION 3.0.1
+
+RUN apk add --no-cache -U --virtual .build-deps \
+    curl \
+  && curl -fL "https://github.com/mattes/migrate/releases/download/v$MIGRATE_VERSION/migrate.linux-amd64.tar.gz" -o migrate.tar.gz \
+  && tar zxvf migrate.tar.gz \
+  && mv ./migrate.linux-amd64 /usr/local/bin/migrate \
+  && rm ./migrate.tar.gz \
+  && apk del .build-deps
+
+
 #  glibc (https://github.com/sgerrand/alpine-pkg-glibc)
 #-----------------------------------------------
 # @see http://qiita.com/tkusumi/items/1668df2fc4cf61a68282
