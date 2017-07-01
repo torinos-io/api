@@ -32,3 +32,28 @@ spec:
             failureThreshold: 20
           ports:
             - containerPort: 8080
+          env:
+            - name: APP_HOST
+              value: ':8080'
+            - name: APP_ENV
+              value: production
+            - name: APP_BASIC_AUTH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: dotenv
+                  key: app-basic-auth-username
+            - name: APP_BASIC_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dotenv
+                  key: app-basic-auth-password
+            - name: APP_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: dotenv
+                  key: app-database-url
+            - name: APP_HONEYBADGER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dotenv
+                  key: app-honeybadger-api-key
