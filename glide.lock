@@ -1,5 +1,5 @@
-hash: 733c032f81a467e8e63fe1a870333a92d755a035adcdf51e6023159665a21ea0
-updated: 2017-07-01T03:22:56.35438829Z
+hash: 324d43a8748b2934cafb82b86b21517887747c2bf13e26b5ca04247c2f26e59a
+updated: 2017-07-01T06:48:47.924652896Z
 imports:
 - name: github.com/asaskevich/govalidator
   version: aa5cce4a76edb1a5acecab1870c17abbffb5419e
@@ -29,7 +29,7 @@ imports:
 - name: github.com/honeybadger-io/honeybadger-go
   version: 36d30005a9a829178efbdf9a78e29edd136a569b
 - name: github.com/jinzhu/gorm
-  version: 5174cc5c242a728b435ea2be8a2f7f998e15429b
+  version: eae7f6be603af3190e032fe3c4d465ddaf6ea3d4
 - name: github.com/jinzhu/inflection
   version: 1c35d901db3da928c72a72d8458480cc9ade058f
 - name: github.com/joho/godotenv
