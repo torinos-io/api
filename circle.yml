@@ -48,16 +48,14 @@ dependencies:
 
   override:
     - go get -u github.com/golang/lint/golint
-    - glide install
+    - cd "$ROOT_DIR" && glide install
 
 test:
   override:
-    - script/ci-build:
-        pwd: "$ROOT_DIR"
+    - cd "$ROOT_DIR" && script/ci-build
 
 deployment:
   production:
     branch: master
     commands:
-      - script/ci-deploy:
-          pwd: "$ROOT_DIR"
+      - cd "$ROOT_DIR" && script/ci-deploy
