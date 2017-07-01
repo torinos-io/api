@@ -12,6 +12,6 @@ if [ -f .env ]; then
 fi
 
 migrate \
-  -url "$APP_DATABASE_URL" \
+  -database "$APP_DATABASE_URL" \
   -path ./data/migrations \
   "$@"
