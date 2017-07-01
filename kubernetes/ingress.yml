@@ -1,0 +1,11 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: torinos-api
+  namespace: torinos-api
+spec:
+  tls:
+    - secretName: tls
+  backend:
+    serviceName: torinos-api
+    servicePort: 80
