@@ -11,7 +11,7 @@ services:
     extra_hosts:
       localhost: "${DOCKER_HOST_IP}"
     links:
-      - sample_db
+      - torinos_db
     ports:
       - 5000:5000
     command: tail -f /dev/null
