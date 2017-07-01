@@ -1,4 +1,4 @@
-create table project(
+create table project (
     uuid varchar(255) primary key,
     user_id int foreign key references users(id),
     cart_file_content text,
