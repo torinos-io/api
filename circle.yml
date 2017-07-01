@@ -16,6 +16,8 @@ machine:
     CLUSTER_NAME:          cluster-1
     CLOUDSDK_COMPUTE_ZONE: asia-east1-b
 
+    GOPATH: "$HOME/.go_workspace:/usr/local/go_workspace:$HOME/.go_project"
+
 dependencies:
   cache_directories:
     - vendor
@@ -42,6 +44,7 @@ dependencies:
       set -e
       mkdir -p "$HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME"
       ln -s "$HOME/$CIRCLE_PROJECT_REPONAME" "$HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
+      cd "$HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
 
   override:
     - go get -u github.com/golang/lint/golint
