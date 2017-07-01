@@ -23,12 +23,6 @@ dependencies:
   pre:
     - |
       set -e
-      mkdir -p "$GOPATH/bin"
-      mkdir -p "$GOPATH/src/github.com/$CIRCLE_PROJECT_USERNAME"
-      ln -s "$(pwd)" "$GOPATH/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
-
-    - |
-      set -e
       sudo add-apt-repository ppa:masterminds/glide -y
       sudo apt-get update -q
       sudo apt-get install glide -y
@@ -43,6 +37,13 @@ dependencies:
       sudo /opt/google-cloud-sdk/bin/gcloud config set compute/zone "$CLOUDSDK_COMPUTE_ZONE"
       sudo /opt/google-cloud-sdk/bin/gcloud --quiet config set container/cluster "$CLUSTER_NAME"
       sudo /opt/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials "$CLUSTER_NAME"
+
+    - |
+      set -e
+      mkdir -p "$GOPATH/bin"
+      mkdir -p "$GOPATH/src/github.com/$CIRCLE_PROJECT_USERNAME"
+      ln -s "$(pwd)" "$GOPATH/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
+      cd "$GOPATH/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
 
   override:
     - go get -u github.com/golang/lint/golint
