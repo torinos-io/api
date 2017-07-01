@@ -1,0 +1,36 @@
+version: '2.1'
+
+services:
+  app:
+    image: torinosio/api:dev
+    build: .
+    volumes:
+      - ..:/app
+    volumes_from:
+      - volume
+    extra_hosts:
+      localhost: "${DOCKER_HOST_IP}"
+    links:
+      - sample_db
+    ports:
+      - 5000:5000
+    command: tail -f /dev/null
+
+  sample_db:
+    image: postgres:9.6.1-alpine
+    volumes:
+      - ../tmp/sample_db:/var/lib/postgresql/data
+    expose:
+      - 5432
+    ports:
+      - 5432
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=
+      - POSTGRES_DB=sample
+
+  volume:
+    image: alpine:latest
+    volumes:
+      - /app/vendor
+    command: tail -f /dev/null
