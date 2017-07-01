@@ -1,7 +1,5 @@
 FROM alpine:3.4
 
-ENV PATH /app/script:/app/bin:$PATH
-
 # c.f. https://github.com/sgerrand/alpine-pkg-glibc/blob/2.23-r3/README.md
 RUN apk add --no-cache \
     ca-certificates gcc wget \
