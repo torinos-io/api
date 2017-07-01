@@ -22,6 +22,7 @@ func drawRoutes(r *gin.Engine, appContext *system.AppContext) {
 	r.Use(middleware.SetAppContextWrapper(appContext))
 
 	{
+		r.GET("/", route.Ping)
 		r.GET("/ping", route.Ping)
 	}
 
