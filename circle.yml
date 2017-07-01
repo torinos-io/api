@@ -11,7 +11,7 @@ machine:
     REPO:        torinosio/api
     K8S_VERSION: v1.5.7
     BRANCH:      $(echo $CIRCLE_BRANCH | sed -e 's/[^a-zA-Z0-9]/_/g')
-    TAG:         $CIRCLE_BRANCH-${CIRCLE_SHA1::8}
+    TAG:         $BRANCH-${CIRCLE_SHA1::8}
 
     CLUSTER_NAME:          cluster-1
     CLOUDSDK_COMPUTE_ZONE: asia-east1-b
