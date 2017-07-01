@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: torinos-api
+  namespace: torinos-api
+  labels:
+    name: torinos-api
+    role: web
+spec:
+  minReadySeconds: 30
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+  replicas: 2
+  template:
+    metadata:
+      name: torinos-api
+      labels:
+        name: torinos-api
+        role: web
+    spec:
+      containers:
+        - image: torinosio/api:latest
+          name: torinos-api
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              path: ping
+              port: 8080
+            timeoutSeconds: 100
+            failureThreshold: 20
+          ports:
+            - containerPort: 8080

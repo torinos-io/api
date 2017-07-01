@@ -16,3 +16,5 @@ RUN mkdir /app
 COPY ./bin /app/bin
 COPY ./script /app/script
 COPY ./data /app/data
+
+CMD ["/app/bin/api"]
