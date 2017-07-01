@@ -16,10 +16,10 @@ services:
       - 5000:5000
     command: tail -f /dev/null
 
-  sample_db:
+  torinos_db:
     image: postgres:9.6.1-alpine
     volumes:
-      - ../tmp/sample_db:/var/lib/postgresql/data
+      - ../tmp/torinos_db:/var/lib/postgresql/data
     expose:
       - 5432
     ports:
@@ -27,7 +27,7 @@ services:
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=
-      - POSTGRES_DB=sample
+      - POSTGRES_DB=maindb
 
   volume:
     image: alpine:latest
