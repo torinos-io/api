@@ -1,0 +1,54 @@
+machine:
+  golang:
+    version: 1.8.3
+
+  services:
+    - docker
+
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+
+    REPO:        torinosio/api
+    K8S_VERSION: v1.5.7
+    BRANCH:      $(echo $CIRCLE_BRANCH | sed -e 's/[^a-zA-Z0-9]/_/g')
+    TAG:         $CIRCLE_BRANCH-${CIRCLE_SHA1::8}
+
+    CLUSTER_NAME:          cluster-1
+    CLOUDSDK_COMPUTE_ZONE: asia-east1-b
+
+dependencies:
+  cache_directories:
+    - vendor
+
+  pre:
+    - |
+      set -e
+      sudo add-apt-repository ppa:masterminds/glide -y
+      sudo apt-get update -q
+      sudo apt-get install glide -y
+      mkdir -p $GOPATH/bin
+
+    - |
+      set -e
+      sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
+      sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update kubectl
+      echo "$GCLOUD_SERVICE_CRED" | base64 --decode -i > "${HOME}/account-auth.json"
+      sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file "${HOME}/account-auth.json"
+      sudo /opt/google-cloud-sdk/bin/gcloud config set project "$PROJECT_NAME"
+      sudo /opt/google-cloud-sdk/bin/gcloud config set compute/zone "$CLOUDSDK_COMPUTE_ZONE"
+      sudo /opt/google-cloud-sdk/bin/gcloud --quiet config set container/cluster "$CLUSTER_NAME"
+      sudo /opt/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials "$CLUSTER_NAME"
+
+  override:
+    - go get -u github.com/golang/lint/golint
+    - glide install
+
+test:
+  override:
+    - script/ci-build
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - script/ci-deploy

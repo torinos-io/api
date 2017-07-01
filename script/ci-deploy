@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -eu
+set -o pipefail
+
+cd "$(dirname $0)/.."
+
+[ "$BRANCH" == "master" ] || exit 0
+
+echo "Deploy ${REPO}:${TAG}"
+cat kubernetes/deployment.yml \
+  | sed "s,latest,${TAG},g" \
+  | sudo /opt/google-cloud-sdk/bin/kubectl replace -f -
