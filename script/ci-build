@@ -3,7 +3,8 @@
 set -eu
 set -o pipefail
 
-cd "$(dirname $0)/.."
+# cd "$(dirname $0)/.."
+cd "$HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
 
 echo "test"
 make test

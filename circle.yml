@@ -45,17 +45,14 @@ dependencies:
 
   override:
     - go get -u github.com/golang/lint/golint
-    - cd "$HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
     - glide install
 
 test:
   override:
-    - cd "$HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
     - script/ci-build
 
 deployment:
   production:
     branch: master
     commands:
-      - cd "$HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
       - script/ci-deploy
