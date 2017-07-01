@@ -8,7 +8,7 @@ type Config struct {
 	BasicAuthUsername string `envconfig:"basic_auth_username" valid:"required"`
 	BasicAuthPassword string `envconfig:"basic_auth_password" valid:"required"`
 	HoneybadgerAPIKey string `envconfig:"honeybadger_api_key"`
-	SampleDatabaseURL string `envconfig:"sample_database_url" valid:"required"`
+	DatabaseURL       string `envconfig:"database_url" valid:"required"`
 }
 
 // IsDevelopment returns whether the application is running as a development mode

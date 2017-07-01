@@ -6,6 +6,6 @@ import (
 
 // AppContext represents a context of application
 type AppContext struct {
-	Config   *Config
-	SampleDB *gorm.DB
+	Config *Config
+	MainDB *gorm.DB
 }
