@@ -1,4 +1,4 @@
-create table user (
+create table users (
     id serial primary key,
     
     user_name varchar(255),
@@ -6,4 +6,4 @@ create table user (
     github_access_token varchar(255)
 );
 
-crete unique index index_user_on_github_uuid on user (github_uuid);
+create unique index index_users_on_github_uuid on users (github_uuid);

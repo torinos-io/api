@@ -1,1 +1,1 @@
-drop table dependency;
+drop table dependencies;
