@@ -1,0 +1,59 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: torinos-api
+  namespace: torinos-api
+  labels:
+    name: torinos-api
+    role: web
+spec:
+  minReadySeconds: 30
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+  replicas: 2
+  template:
+    metadata:
+      name: torinos-api
+      labels:
+        name: torinos-api
+        role: web
+    spec:
+      containers:
+        - image: torinosio/api:latest
+          name: torinos-api
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              path: ping
+              port: 8080
+            timeoutSeconds: 100
+            failureThreshold: 20
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_HOST
+              value: ':8080'
+            - name: APP_ENV
+              value: production
+            - name: APP_BASIC_AUTH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: dotenv
+                  key: app-basic-auth-username
+            - name: APP_BASIC_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dotenv
+                  key: app-basic-auth-password
+            - name: APP_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: dotenv
+                  key: app-database-url
+            - name: APP_HONEYBADGER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dotenv
+                  key: app-honeybadger-api-key

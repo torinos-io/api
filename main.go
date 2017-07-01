@@ -43,8 +43,8 @@ func main() {
 func start(c *system.Config) {
 	ctx := &system.AppContext{Config: c}
 
-	ctx.SampleDB = store.NewDatabase(c.SampleDatabaseURL, true)
-	defer ctx.SampleDB.Close()
+	ctx.MainDB = store.NewDatabase(c.DatabaseURL, true)
+	defer ctx.MainDB.Close()
 
 	server.Run(ctx)
 }
