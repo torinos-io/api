@@ -9,8 +9,8 @@ package model
 
 // Project has uploaded repository information.
 type Project struct {
-	UUID                  string `json:"uuid"`
-	UserID                int    `json:"user_id"`
+	UUID string `json:"uuid"`
+
 	CartFileContent       string `json:"cart_file_content"`
 	PodFileLockContent    string `json:"pods_file_content"`
 	PBXproject            string `json:"xcode_xml_content"`
@@ -18,4 +18,6 @@ type Project struct {
 	Repository            string `json:"repository"`
 	LastFetchedAt         Time   `json:"last_fetched_at"`
 	StateCD               int    `json:"status_cd"`
+
+	UserID int `json:"user_id"`
 }
