@@ -5,5 +5,5 @@ create table notifications (
     deleted_at  timestamp without time zone,
 
     user_id         int references users(id),
-    project_uuid    uuid not null references projects(uuid),
+    project_uuid    uuid not null references projects(uuid)
 );
