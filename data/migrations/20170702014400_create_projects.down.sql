@@ -1,1 +1,1 @@
-drop table notifications;
+drop table projects;
