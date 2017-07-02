@@ -12,8 +12,8 @@ type Project struct {
 	UUID                  string `json:"uuid"`
 	UserID                int    `json:"user_id"`
 	CartFileContent       string `json:"cart_file_content"`
-	PodsFileContent       string `json:"pods_file_content"`
-	XcodeXMLContent       string `json:"xcode_xml_content"`
+	PodFileLockContent    string `json:"pods_file_content"`
+	PBXproject            string `json:"xcode_xml_content"`
 	SupportedSwiftVersion string `json:"supported_swift_version"`
 	Repository            string `json:"repository"`
 	LastFetchedAt         Time   `json:"last_fetched_at"`
