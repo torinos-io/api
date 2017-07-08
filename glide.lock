@@ -1,6 +1,8 @@
-hash: b347f574c9e603e7cc5fcda4bc179dd1a442697d489743fac3217c194d76b15f
-updated: 2017-07-08T10:11:04.55743661Z
+hash: c58a5a9ba734f839acfe44e70b794bce048b8c25eeafb942a47bf6ba7104316d
+updated: 2017-07-08T22:34:10.784314811+09:00
 imports:
+- name: github.com/aokoli/goutils
+  version: 3391d3790d23d03408670993e957e8f408993c34
 - name: github.com/asaskevich/govalidator
   version: aa5cce4a76edb1a5acecab1870c17abbffb5419e
 - name: github.com/creasty/configo
@@ -9,8 +11,8 @@ imports:
   version: 3f1709e701b8da228eee927cc46b42234ac7d7fc
   subpackages:
   - app_error
-  - recovery
   - readbody
+  - recovery
 - name: github.com/creasty/panicsync
   version: b8fcc116448dd177a128ab4eb2d83b75dd210d87
 - name: github.com/ghodss/yaml
@@ -32,6 +34,12 @@ imports:
   version: 41961cea0328defc5f95c1c473f89ebf0d1813f6
 - name: github.com/honeybadger-io/honeybadger-go
   version: 36d30005a9a829178efbdf9a78e29edd136a569b
+- name: github.com/huandu/xstrings
+  version: 3959339b333561bf62a38b424fd41517c2c90f40
+- name: github.com/imdario/mergo
+  version: 3e95a51e0639b4cf372f2ccf74c86749d747fbdc
+- name: github.com/jaytaylor/html2text
+  version: 7c7a33a7a158a5ce395c803d2b6a209b2bbc14c8
 - name: github.com/jinzhu/gorm
   version: eae7f6be603af3190e032fe3c4d465ddaf6ea3d4
 - name: github.com/jinzhu/inflection
@@ -52,30 +60,56 @@ imports:
   version: ae43f192cef2add653fe1481a3070ed00a4a6981
   subpackages:
   - stack
+- name: github.com/Masterminds/semver
+  version: 59c29afe1a994eacb71c833025ca7acf874bb1da
+- name: github.com/Masterminds/sprig
+  version: e039e20e500c2c025d9145be375e27cf42a94174
+- name: github.com/matcornic/hermes
+  version: 377cc7e34f13533db0c3352b4fc7513c3b64522d
 - name: github.com/mattn/go-colorable
   version: 941b50ebc6efddf4c41c8e4537a5f68a4e686b24
 - name: github.com/mattn/go-isatty
   version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
+- name: github.com/mattn/go-runewidth
+  version: 97311d9f7767e3d6f422ea06661bc2c7a19e8a5d
 - name: github.com/mattn/go-zglob
   version: 95345c4e1c0ebc9d16a3284177f09360f4d20fab
   subpackages:
   - fastwalk
 - name: github.com/mitchellh/panicwrap
   version: fce601fe55579125e1b3cb0b992287e7290f7b83
+- name: github.com/olekukonko/tablewriter
+  version: febf2d34b54a69ce7530036c7503b1c9fbfdf0bb
 - name: github.com/pborman/uuid
   version: e790cca94e6cc75c7064b1332e63811d4aae1a53
 - name: github.com/rs/cors
   version: 8dd4211afb5d08dbb39a533b9bb9e4b486351df6
+- name: github.com/russross/blackfriday
+  version: 067529f716f4c3f5e37c8c95ddd59df1007290ae
+- name: github.com/satori/go.uuid
+  version: 879c5887cd475cd7864858769793b2ceb0d44feb
 - name: github.com/shirou/gopsutil
   version: 3dd8bd46d9a1ccbd37b3ba6e3dc1dc7d37ba8dc5
   subpackages:
+  - internal/common
   - load
   - mem
-  - internal/common
+- name: github.com/ssor/bom
+  version: 6ed919a936d5ab554e4b40bc51f7c522488122c6
 - name: github.com/ugorji/go
   version: 5efa3251c7f7d05e5d9704a69a984ec9f1386a40
   subpackages:
   - codec
+- name: golang.org/x/crypto
+  version: 1f22c0103821b9390939b6776727195525381532
+  subpackages:
+  - pbkdf2
+  - scrypt
+- name: golang.org/x/net
+  version: f315505cf3349909cdf013ea56690da34e96a451
+  subpackages:
+  - html
+  - html/atom
 - name: golang.org/x/sys
   version: 4ed4d404df456f81e878683a0363ed3013a59003
   subpackages:
