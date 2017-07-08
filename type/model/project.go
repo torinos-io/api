@@ -12,9 +12,9 @@ type Project struct {
 	UUID   string `json:"uuid"`
 	UserID int    `json:"user_id"`
 
-	CartFileContent       string `json:"cartfile_content"`
-	PodFileLockContent    string `json:"podfile_content"`
-	PBXproject            string `json:"pbxporj_content"`
+	CartfileContent       string `json:"cartfile_content"`
+	PodfileLockContent    string `json:"podfile_content"`
+	PBXprojectContent     string `json:"pbxporj_content"`
 	SupportedSwiftVersion string `json:"supported_swift_version"`
 	Repository            string `json:"repository"`
 	LastFetchedAt         Time   `json:"last_fetched_at"`
