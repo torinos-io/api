@@ -24,3 +24,4 @@ import:
   subpackages:
   - stack
 - package: github.com/go-errors/errors
+- package: gopkg.in/guregu/null.v3
