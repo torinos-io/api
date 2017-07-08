@@ -1,5 +1,9 @@
 package model
 
+import (
+	"gopkg.in/guregu/null.v3"
+)
+
 // StateCD
 // 0 = pending
 // 1 = fetching
@@ -9,8 +13,8 @@ package model
 
 // Project has uploaded repository information.
 type Project struct {
-	UUID   string `json:"uuid"`
-	UserID int    `json:"user_id"`
+	UUID   string   `json:"uuid"`
+	UserID null.Int `json:"user_id"`
 
 	CartfileContent       string `json:"cartfile_content"`
 	PodfileLockContent    string `json:"podfile_content"`
