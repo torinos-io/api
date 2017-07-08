@@ -6,15 +6,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Authorize user
-func Authorize(c *gin.Context) {
+// GetAuthorization authorize user
+func GetAuthorization(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Authorize",
 	})
 }
 
-// Authenticate user
-func Authenticate(c *gin.Context) {
+// GetAuthentication authenticate user
+func GetAuthentication(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Authenticate",
 	})
