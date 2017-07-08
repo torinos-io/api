@@ -6,7 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// CurrentUser return the current user
-func CurrentUser(c *gin.Context) {
-	c.String(http.StatusOK, "CurrentUser")
+// GetCurrentUser return the current user
+func GetCurrentUser(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"message": "GetCurrentUser",
+		"user":    "yamada",
+	})
 }
