@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// CreateNotification craete noitication of project
+// CreateNotification create notification of project
 func CreateNotification(c *gin.Context) {
 	uuid := c.Param("uuid")
 	c.JSON(http.StatusOK, gin.H{
