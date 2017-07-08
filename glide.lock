@@ -1,5 +1,5 @@
-hash: 485d5d670fcc31f4fd52de0c003baaeb4373337e793df447b1a97dadef25193c
-updated: 2017-07-08T10:05:25.973198536Z
+hash: b347f574c9e603e7cc5fcda4bc179dd1a442697d489743fac3217c194d76b15f
+updated: 2017-07-08T10:11:04.55743661Z
 imports:
 - name: github.com/asaskevich/govalidator
   version: aa5cce4a76edb1a5acecab1870c17abbffb5419e
@@ -83,8 +83,6 @@ imports:
   - windows
 - name: gopkg.in/go-playground/validator.v8
   version: c193cecd124b5cc722d7ee5538e945bdb3348435
-- name: gopkg.in/guregu/null.v3
-  version: 41961cea0328defc5f95c1c473f89ebf0d1813f6
 - name: gopkg.in/yaml.v2
   version: cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b
 testImports: []

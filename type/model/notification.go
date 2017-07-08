@@ -1,7 +1,7 @@
 package model
 
 import (
-	"gopkg.in/guregu/null.v3"
+	"github.com/guregu/null"
 )
 
 // Notification represents user's notification settings.
