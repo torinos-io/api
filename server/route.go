@@ -24,6 +24,13 @@ func drawRoutes(r *gin.Engine, appContext *system.AppContext) {
 	{
 		r.GET("/", route.Ping)
 		r.GET("/ping", route.Ping)
+		r.GET("/user", nil)
+		r.GET("/oauth/github/authorization", nil)
+		r.POST("/oauth/github/authentication", nil)
+		r.POST("/projects", nil)
+		r.GET("/projects/:uuid", nil)
+		r.POST("/projects/:uuid/notification", nil)
+		r.DELETE("/projects/:uuid/notification", nil)
 	}
 
 	{
@@ -34,4 +41,5 @@ func drawRoutes(r *gin.Engine, appContext *system.AppContext) {
 
 		r.GET("/appinfo", system_route.GetAppInfo)
 	}
+
 }
