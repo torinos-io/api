@@ -9,11 +9,17 @@ import (
 // CreateNotification craete noitication of project
 func CreateNotification(c *gin.Context) {
 	uuid := c.Param("uuid")
-	c.String(http.StatusOK, "Create notification:"+uuid)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Notification created",
+		"uuid":    uuid,
+	})
 }
 
 // DeleteNotification delete notification of project
 func DeleteNotification(c *gin.Context) {
 	uuid := c.Param("uuid")
-	c.String(http.StatusOK, "Delete notification:"+uuid)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Notification deleted",
+		"uuid":    uuid,
+	})
 }
