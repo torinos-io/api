@@ -28,8 +28,9 @@ spec:
             httpGet:
               path: ping
               port: 8080
-            timeoutSeconds: 100
-            failureThreshold: 20
+            periodSeconds: 20
+            timeoutSeconds: 10
+            failureThreshold: 5
           ports:
             - containerPort: 8080
           env:
