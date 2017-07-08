@@ -1,5 +1,5 @@
-hash: bad87c0bbb0f5867570587a7cec4c9ab1321ec9b8a8f975e2af678f2e6de0228
-updated: 2017-07-08T07:36:12.815285013Z
+hash: 485d5d670fcc31f4fd52de0c003baaeb4373337e793df447b1a97dadef25193c
+updated: 2017-07-08T10:05:25.973198536Z
 imports:
 - name: github.com/asaskevich/govalidator
   version: aa5cce4a76edb1a5acecab1870c17abbffb5419e
@@ -28,6 +28,8 @@ imports:
   version: 2402d76f3d41f928c7902a765dfc872356dd3aad
   subpackages:
   - proto
+- name: github.com/guregu/null
+  version: 41961cea0328defc5f95c1c473f89ebf0d1813f6
 - name: github.com/honeybadger-io/honeybadger-go
   version: 36d30005a9a829178efbdf9a78e29edd136a569b
 - name: github.com/jinzhu/gorm
