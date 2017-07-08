@@ -6,18 +6,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Analyze project
-func Analyze(c *gin.Context) {
+// CreateProject creates project
+func CreateProject(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Analyze",
+		"message": "Project created",
 	})
 }
 
-// GetAnalyzedResult return the analyzed result
-func GetAnalyzedResult(c *gin.Context) {
+// GetProject returns the project
+func GetProject(c *gin.Context) {
 	uuid := c.Param("uuid")
 	c.JSON(http.StatusOK, gin.H{
-		"message": "GetAnalyzedResult",
+		"message": "GetProject",
 		"uuid":    uuid,
 		"result":  "",
 	})
