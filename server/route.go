@@ -26,7 +26,7 @@ func drawRoutes(r *gin.Engine, appContext *system.AppContext) {
 		r.GET("/ping", route.Ping)
 		r.GET("/user", route.GetCurrentUser)
 		r.GET("/oauth/github/authorization", route.GetAuthorization)
-		r.POST("/oauth/github/authentication", route.GetAuthentication)
+		r.POST("/oauth/github/authentication", route.Authenticate)
 		r.POST("/projects", route.CreateProject)
 		r.GET("/projects/:uuid", route.GetProject)
 		r.POST("/projects/:uuid/notification", route.Subscribe)

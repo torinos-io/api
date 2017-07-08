@@ -13,8 +13,8 @@ func GetAuthorization(c *gin.Context) {
 	})
 }
 
-// GetAuthentication authenticate user
-func GetAuthentication(c *gin.Context) {
+// Authenticate user
+func Authenticate(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Authenticate",
 	})
