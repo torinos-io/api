@@ -8,7 +8,8 @@ package model
 
 // Dependency has project dependency and source distination.
 type Dependency struct {
+	SourceCD int `json:"source_cd"`
+
 	ProjectUUID          string `json:"project_uuid"`
 	DependentProjectUUID string `json:"dependent_project_uuid"`
-	SourceCD             int    `json:"source_cd"`
 }
