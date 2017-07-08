@@ -6,20 +6,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// CreateNotification create notification of project
-func CreateNotification(c *gin.Context) {
+// Subscribe subscription
+func Subscribe(c *gin.Context) {
 	uuid := c.Param("uuid")
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Notification created",
+		"message": "Subscribed",
 		"uuid":    uuid,
 	})
 }
 
-// DeleteNotification delete notification of project
-func DeleteNotification(c *gin.Context) {
+// Unsubscribe subscription
+func Unsubscribe(c *gin.Context) {
 	uuid := c.Param("uuid")
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Notification deleted",
+		"message": "Unsubscribed",
 		"uuid":    uuid,
 	})
 }

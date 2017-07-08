@@ -29,8 +29,8 @@ func drawRoutes(r *gin.Engine, appContext *system.AppContext) {
 		r.POST("/oauth/github/authentication", route.GetAuthentication)
 		r.POST("/projects", route.Analyze)
 		r.GET("/projects/:uuid", route.GetAnalyzedResult)
-		r.POST("/projects/:uuid/notification", route.CreateNotification)
-		r.DELETE("/projects/:uuid/notification", route.DeleteNotification)
+		r.POST("/projects/:uuid/notification", route.Subscribe)
+		r.DELETE("/projects/:uuid/notification", route.Unsubscribe)
 	}
 
 	{
