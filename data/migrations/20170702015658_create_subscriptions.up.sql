@@ -1,4 +1,4 @@
-create table notifications (
+create table subscriptions (
     id              serial primary key,
     user_id         int references users(id),
     project_uuid    uuid not null references projects(uuid),
