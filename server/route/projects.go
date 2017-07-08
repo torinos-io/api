@@ -8,11 +8,17 @@ import (
 
 // Analyze project
 func Analyze(c *gin.Context) {
-	c.String(http.StatusOK, "Analyze")
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Analyze",
+	})
 }
 
-// Result return the analyzed result
-func Result(c *gin.Context) {
+// GetAnalyzedResult return the analyzed result
+func GetAnalyzedResult(c *gin.Context) {
 	uuid := c.Param("uuid")
-	c.String(http.StatusOK, uuid)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "GetAnalyzedResult",
+		"uuid":    uuid,
+		"result":  "",
+	})
 }
