@@ -2,5 +2,5 @@
 .env
 bin/
 vendor/
-data/config/*.local.yml
 tmp/*
+/.idea/**/*.*
