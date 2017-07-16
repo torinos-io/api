@@ -16,8 +16,6 @@ type SaveRequest struct {
 
 func (s *service) Save(req *SaveRequest) (*model.User, error) {
 
-	// TODO: GitHubのやつでいいかんじにしていく
-
 	token, err := s.exchangeCodeForAccessToken(req.AuthorizationCode)
 
 	if err != nil {
