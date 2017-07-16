@@ -26,9 +26,12 @@ func Run(appContext *system.AppContext) {
 
 	drawRoutes(r, appContext)
 
+	h := util.NewCorsHandler(r, appContext.Config.Cors.AllowedOrigins)
+	h = util.NewMethodOverrider(h)
+
 	httpServer := &http.Server{
 		Addr:           appContext.Config.Host,
-		Handler:        util.NewMethodOverrider(r),
+		Handler:        h,
 		ReadTimeout:    ServerReadTimeout,
 		WriteTimeout:   ServerWriteTimeout,
 		MaxHeaderBytes: 1 << 20,
