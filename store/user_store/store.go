@@ -33,6 +33,9 @@ func (s *concreteStore) CreateUserFromGithub(githubUser *model.GithubUser, acces
 	}
 
 	user.GithubAccessToken = accessToken
+	user.GithubUUID = githubUser.UUID()
+	user.Email = githubUser.Email
+	user.UserName = githubUser.UserName
 
 	db := s.db.Save(user)
 
