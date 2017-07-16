@@ -1,6 +1,12 @@
 package store
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/go-errors/errors"
+	"github.com/guregu/null"
+	"github.com/jinzhu/gorm"
+
+	"github.com/torinos-io/api/type/model"
+)
 
 type concreteStore struct {
 	db *gorm.DB
@@ -8,6 +14,9 @@ type concreteStore struct {
 
 // Store is an interface for CRUD category records
 type Store interface {
+	CreateOrUpdateProject() (*model.Project, error)
+	GetAllProjectsByUserID(userID null.Int) (*[]model.Project, error)
+	GetProjectByProjectUUID(uuid string) (*model.Project, error)
 }
 
 // New creates a store
@@ -15,4 +24,32 @@ func New(db *gorm.DB) Store {
 	return &concreteStore{
 		db: db,
 	}
+}
+
+func (s *concreteStore) CreateOrUpdateProject() (*model.Project, error) {
+	project := &model.Project{}
+	return project, nil
+}
+
+func (s *concreteStore) GetAllProjectsByUserID(userID null.Int) (*[]model.Project, error) {
+	projects := &[]model.Project{}
+	finder := s.db.Where("user_id", userID).Find(projects)
+
+	if err := finder.Error; err != nil {
+		return projects, errors.Wrap(err, 0)
+	}
+
+	return projects, nil
+}
+
+func (s *concreteStore) GetProjectByProjectUUID(uuid string) (*model.Project, error) {
+	project := &model.Project{}
+
+	finder := s.db.Where("uuid", uuid).Find(project)
+
+	if err := finder.Error; err != nil {
+		return project, errors.Wrap(err, 0)
+	}
+
+	return project, nil
 }
