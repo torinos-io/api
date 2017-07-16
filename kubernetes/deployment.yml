@@ -62,9 +62,9 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: dotenv
-                  key: app-github-client-key
+                  key: app-github-client-id
             - name: APP_GITHUB_CLIENT_SECRET
-               valueFrom:
-                 secretKeyRef:
+              valueFrom:
+                secretKeyRef:
                   name: dotenv
                   key: app-github-client-secret

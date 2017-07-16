@@ -20,5 +20,12 @@ Run
 ---
 
 ```sh-session
+# install deps
+$ rid glide i
+
+# run server
 $ rid make run
+
+# run test
+$ rid make test
 ```
