@@ -13,7 +13,7 @@ func NewCorsHandler(engine *gin.Engine, allowOrigins []string) http.Handler {
 		AllowedOrigins:   allowOrigins,
 		AllowCredentials: true,
 		AllowedMethods:   []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
-		AllowedHeaders:   []string{"Access-Control-Allow-Origin"},
+		AllowedHeaders:   []string{"Access-Control-Allow-Origin", "Content-Type", "Accept"},
 		Debug:            false,
 	})
 
