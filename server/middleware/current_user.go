@@ -18,25 +18,25 @@ func SetCurrentUser(appContext *system.AppContext) gin.HandlerFunc {
 
 		h := c.GetHeader("Authorization")
 
-		if h != "" {
-			userStore := user_store.New(appContext.MainDB)
-			service := oauth_service.New(oauth_service.Context{
-				Config:    appContext.Config,
-				UserStore: userStore,
-			})
-
-			user, err := service.FindByAuthToken(h)
-
-			if err != nil {
-				c.Set(currentuser, user)
-				c.Next()
-				return
-			}
-
+		if h == "" {
 			c.Next()
 			return
 		}
 
+		userStore := user_store.New(appContext.MainDB)
+		service := oauth_service.New(oauth_service.Context{
+			Config:    appContext.Config,
+			UserStore: userStore,
+		})
+
+		user, err := service.FindByAuthToken(h)
+
+		if err != nil {
+			c.Next()
+			return
+		}
+
+		c.Set(currentuser, user)
 		c.Next()
 	}
 }
