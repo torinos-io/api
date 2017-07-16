@@ -34,21 +34,18 @@ func (s *service) exchangeCodeForAccessToken(code string) (string, error) {
 		AccessToken string `json:"access_token"`
 	}{}
 
-	resp, err := resty.R().
+	_, err := resty.R().
 		SetBody(map[string]string{
 			"code":          code,
 			"client_id":     s.Config.GithubClientID,
 			"client_secret": s.Config.GithubClientSecret,
 		}).
+		SetError(errors.Errorf("%d.auth_service.github", http.StatusBadGateway)).
 		SetResult(&tokenResponse).
 		Get("https://github.com/login/oauth/access_token")
 
 	if err != nil {
 		return nil, errors.Wrap(err, 0)
-	}
-
-	if code := resp.StatusCode(); code != http.StatusCreated {
-		return nil, errors.Errorf("%d.auth_service.github", code)
 	}
 
 	return tokenResponse.AccessToken, nil
@@ -57,17 +54,14 @@ func (s *service) exchangeCodeForAccessToken(code string) (string, error) {
 func (s *service) getGithubUser(accessToken string) (*model.GithubUser, error) {
 	githubUser := model.GithubUser{}
 
-	resp, err := resty.R().
+	_, err := resty.R().
 		SetHeader("Authorization", fmt.Sprintf("token %s", accessToken)).
+		SetError(errors.Errorf("%d.auth_service.github", http.StatusBadGateway)).
 		SetResult(&githubUser).
 		Get("https://api.github.com/user")
 
 	if err != nil {
 		return nil, errors.Wrap(err, 0)
-	}
-
-	if code := resp.StatusCode(); code != http.StatusOK {
-		return nil, errors.Errorf("%d.auth_service.github", code)
 	}
 
 	return &githubUser, nil
