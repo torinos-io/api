@@ -10,9 +10,11 @@ import (
 
 // GetCurrentUser return the current user
 func GetCurrentUser(c *gin.Context) {
-	if user := middleware.GetCurrentUser(c); user != nil {
-		c.JSON(http.StatusOK, user)
-	} else {
-		c.JSON(http.StatusUnauthorized, "Can not find authorized current user")
+	user := middleware.GetCurrentUser(c)
+	if user == nil {
+		c.AbortWithStatus(http.StatusUnauthorized)
+		return
 	}
+
+	c.JSON(http.StatusOK, user)
 }
