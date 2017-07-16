@@ -28,3 +28,6 @@ import:
   version: v3.1
 - package: github.com/go-resty/resty
   version: v0.13
+- package: golang.org/x/net
+  subpackages:
+  - publicsuffix

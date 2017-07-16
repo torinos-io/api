@@ -1,5 +1,5 @@
-hash: 6d286d682082ebe522cec5a35fdfce494782d206de3901b7792105c228b42bf2
-updated: 2017-07-16T07:40:00.249860789Z
+hash: e2eb76e52ef12ceaaee2c055664e0a09268ed298eb2fb4a34250589e8c591c3c
+updated: 2017-07-16T13:16:34.552830534Z
 imports:
 - name: github.com/asaskevich/govalidator
   version: aa5cce4a76edb1a5acecab1870c17abbffb5419e
@@ -78,6 +78,10 @@ imports:
   version: 5efa3251c7f7d05e5d9704a69a984ec9f1386a40
   subpackages:
   - codec
+- name: golang.org/x/net
+  version: f01ecb60fe3835d80d9a0b7b2bf24b228c89260e
+  subpackages:
+  - publicsuffix
 - name: golang.org/x/sys
   version: 4ed4d404df456f81e878683a0363ed3013a59003
   subpackages:
