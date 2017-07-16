@@ -25,6 +25,7 @@ func New(db *gorm.DB) Store {
 	}
 }
 
+// CreateUserFromGithub creates new user
 func (s *concreteStore) CreateUserFromGithub(githubUser *model.GithubUser, accessToken string) (*model.User, error) {
 	user := &model.User{}
 	finder := s.db.Where("github_uuid = ?", githubUser.UUID()).Find(user)
@@ -47,6 +48,7 @@ func (s *concreteStore) CreateUserFromGithub(githubUser *model.GithubUser, acces
 	return user, nil
 }
 
+// FindByGithubUser returns user that found by given github user id
 func (s *concreteStore) FindByGithubUser(uuid string) (*model.User, error) {
 	user := &model.User{}
 	finder := s.db.Where("github_uuid = ?", uuid).Find(user)
@@ -58,6 +60,7 @@ func (s *concreteStore) FindByGithubUser(uuid string) (*model.User, error) {
 	return user, nil
 }
 
+// FindByAuthToken returns user that found by given access token
 func (s *concreteStore) FindByAuthToken(token string) (*model.User, error) {
 	user := &model.User{}
 	finder := s.db.Where("github_access_token = ?", token).Find(user)
