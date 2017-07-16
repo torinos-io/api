@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: torinos-api
   namespace: torinos-api
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: torinos-api
 spec:
   tls:
     - secretName: tls
