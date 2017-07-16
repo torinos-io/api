@@ -52,7 +52,7 @@ func (s *service) exchangeCodeForAccessToken(code string) (string, error) {
 }
 
 func (s *service) getGithubUser(accessToken string) (*model.GithubUser, error) {
-	githubUser := model.GithubUser{}
+	githubUser := &model.GithubUser{}
 
 	_, err := resty.R().
 		SetHeader("Authorization", fmt.Sprintf("token %s", accessToken)).
@@ -64,5 +64,5 @@ func (s *service) getGithubUser(accessToken string) (*model.GithubUser, error) {
 		return nil, errors.Wrap(err, 0)
 	}
 
-	return &githubUser, nil
+	return githubUser, nil
 }
