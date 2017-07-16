@@ -5,8 +5,8 @@ import (
 
 	oauth_service "github.com/torinos-io/api/service/oauth_service"
 	user_store "github.com/torinos-io/api/store/user_store"
-	"github.com/torinos-io/api/type/system"
 	"github.com/torinos-io/api/type/model"
+	"github.com/torinos-io/api/type/system"
 )
 
 const (
