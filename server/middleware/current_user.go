@@ -29,7 +29,7 @@ func SetCurrentUser(appContext *system.AppContext) gin.HandlerFunc {
 			UserStore: userStore,
 		})
 
-		user, err := service.FindByAuthToken(h)
+		user, err := service.FindByAccessToken(h)
 
 		if err != nil {
 			c.Next()

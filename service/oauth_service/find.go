@@ -20,8 +20,8 @@ func (s *service) Find(req *FindRequest) (*model.User, error) {
 	return s.UserStore.FindByGithubUUID(req.UUID)
 }
 
-// FindByAuthToken returns user that found by given access token
-func (s *service) FindByAuthToken(token string) (*model.User, error) {
+// FindByAccessToken returns user that found by given access token
+func (s *service) FindByAccessToken(token string) (*model.User, error) {
 	githubUser := &model.GithubUser{}
 
 	resp, _ := resty.

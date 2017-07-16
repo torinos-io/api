@@ -17,7 +17,7 @@ type Service interface {
 	Find(req *FindRequest) (*model.User, error)
 	Save(req *SaveRequest) (*model.User, error)
 	GetAuthorization() *GetAuthorizationResponse
-	FindByAuthToken(token string) (*model.User, error)
+	FindByAccessToken(token string) (*model.User, error)
 }
 
 type service struct {
