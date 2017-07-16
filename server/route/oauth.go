@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-
 	"github.com/go-errors/errors"
+
 	"github.com/torinos-io/api/server/middleware"
 	oauth_service "github.com/torinos-io/api/service/oauth_service"
 	user_store "github.com/torinos-io/api/store/user_store"
