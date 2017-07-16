@@ -9,10 +9,10 @@ type FindRequest struct {
 
 // Find returns the found user
 func (s *service) Find(req *FindRequest) (*model.User, error) {
-	return s.UserStore.FindByGithubUser(req.UUID)
+	return s.UserStore.FindByGithubUUID(req.UUID)
 }
 
 // FindByAuthToken returns user that found by given access token
 func (s *service) FindByAuthToken(token string) (*model.User, error) {
-	return s.UserStore.FindByGithubUser(token)
+	return s.UserStore.FindByAuthToken(token)
 }
