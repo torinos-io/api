@@ -11,6 +11,10 @@ type Config struct {
 	DatabaseURL        string `envconfig:"database_url" valid:"required"`
 	GithubClientID     string `envconfig:"github_client_id" valid:"required"`
 	GithubClientSecret string `envconfig:"github_client_secret" valid:"required"`
+
+	Cors struct {
+		AllowedOrigins []string `valid:"required"`
+	} `valid:"required"`
 }
 
 // IsDevelopment returns whether the application is running as a development mode
