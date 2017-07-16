@@ -8,6 +8,14 @@ import (
 
 // CreateProject creates project
 func CreateProject(c *gin.Context) {
+	form, err := c.MultipartForm()
+
+	if err != nil {
+		return
+	}
+
+	files := form.File["upload[]"]
+
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Project created",
 	})
