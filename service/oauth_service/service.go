@@ -9,8 +9,7 @@ import (
 // Context holds interfaces of external services
 type Context struct {
 	UserStore  user_store.Store
-	Config     system.Config
-	GithubUser model.GithubUser
+	Config     *system.Config
 }
 
 // Service is an interface for ...
