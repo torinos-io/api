@@ -20,6 +20,7 @@ func (s *service) GetAuthorization() *GetAuthorizationResponse  {
 	url, _ := neturl.Parse(endpoint)
 
 	query := neturl.Values{}
+	query.Add("access_type", "online")
 	query.Add("scope", scope)
 	query.Add("client_id", s.Config.GithubClientID)
 
