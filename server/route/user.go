@@ -8,8 +8,11 @@ import (
 
 // GetCurrentUser return the current user
 func GetCurrentUser(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "GetCurrentUser",
-		"user":    "yamada",
-	})
+	user, exists := c.Get("currentUser")
+
+	if exists {
+		c.JSON(http.StatusOK, user)
+	} else {
+		c.JSON(http.StatusBadRequest, nil)
+	}
 }
