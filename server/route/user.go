@@ -13,6 +13,6 @@ func GetCurrentUser(c *gin.Context) {
 	if user := middleware.GetCurrentUser(c); user != nil {
 		c.JSON(http.StatusOK, user)
 	} else {
-		c.JSON(http.StatusUnauthorized, "Can not found authorized current user")
+		c.JSON(http.StatusUnauthorized, "Can not find authorized current user")
 	}
 }
