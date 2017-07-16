@@ -10,11 +10,11 @@ type GetAuthorizationResponse struct {
 }
 
 const (
-	scope = "repo,read:org,user"
+	scope    = "repo,read:org,user"
 	endpoint = "https://github.com/login/oauth/authorize"
 )
 
-func (s *service) GetAuthorization() *GetAuthorizationResponse  {
+func (s *service) GetAuthorization() *GetAuthorizationResponse {
 	response := GetAuthorizationResponse{}
 
 	url, _ := neturl.Parse(endpoint)

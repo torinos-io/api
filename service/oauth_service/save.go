@@ -1,12 +1,13 @@
 package service
 
 import (
-	"github.com/go-errors/errors"
-	"github.com/go-resty/resty"
+	"fmt"
 	"net/http"
 
+	"github.com/go-errors/errors"
+	"github.com/go-resty/resty"
+
 	"github.com/torinos-io/api/type/model"
-	"fmt"
 )
 
 // Request is a request object for ...
@@ -43,7 +44,7 @@ func (s *service) exchangeCodeForAccessToken(code string) (string, error) {
 		Get("https://github.com/login/oauth/access_token")
 
 	if err != nil {
-		return nil, errors.Wrap(err, 0)
+		return "", errors.Wrap(err, 0)
 	}
 
 	return tokenResponse.AccessToken, nil
