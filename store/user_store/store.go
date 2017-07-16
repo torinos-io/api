@@ -15,7 +15,6 @@ type concreteStore struct {
 type Store interface {
 	CreateUserFromGithub(githubUser *model.GithubUser, accessToken string) (*model.User, error)
 	FindByGithubUUID(uuid string) (*model.User, error)
-	FindByAuthToken(token string) (*model.User, error)
 }
 
 // New creates a store
@@ -52,18 +51,6 @@ func (s *concreteStore) CreateUserFromGithub(githubUser *model.GithubUser, acces
 func (s *concreteStore) FindByGithubUUID(uuid string) (*model.User, error) {
 	user := &model.User{}
 	finder := s.db.Where("github_uuid = ?", uuid).Find(user)
-
-	if err := finder.Error; err != nil {
-		return user, errors.Wrap(err, 0)
-	}
-
-	return user, nil
-}
-
-// FindByAuthToken returns user that found by given access token
-func (s *concreteStore) FindByAuthToken(token string) (*model.User, error) {
-	user := &model.User{}
-	finder := s.db.Where("github_access_token = ?", token).Find(user)
 
 	if err := finder.Error; err != nil {
 		return user, errors.Wrap(err, 0)

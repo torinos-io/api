@@ -41,6 +41,7 @@ func SetCurrentUser(appContext *system.AppContext) gin.HandlerFunc {
 	}
 }
 
+// GetCurrentUser returns current authenticated user from context
 func GetCurrentUser(c *gin.Context) *model.User {
 	v, exists := c.Get(currentUserContextName)
 

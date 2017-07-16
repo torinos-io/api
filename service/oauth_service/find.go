@@ -1,6 +1,14 @@
 package service
 
-import "github.com/torinos-io/api/type/model"
+import (
+	"fmt"
+	"net/http"
+
+	"github.com/go-errors/errors"
+	"github.com/go-resty/resty"
+
+	"github.com/torinos-io/api/type/model"
+)
 
 // FindRequest is a request object for finds user
 type FindRequest struct {
@@ -14,5 +22,19 @@ func (s *service) Find(req *FindRequest) (*model.User, error) {
 
 // FindByAuthToken returns user that found by given access token
 func (s *service) FindByAuthToken(token string) (*model.User, error) {
-	return s.UserStore.FindByAuthToken(token)
+
+	githubUser := &model.GithubUser{}
+
+	resp, _ := resty.
+		SetDebug(s.Config.Env == "development").
+		R().
+		SetHeader("Authorization", fmt.Sprintf("token %s", token)).
+		SetResult(githubUser).
+		Get("https://api.github.com/user")
+
+	if status := resp.StatusCode(); status != http.StatusOK {
+		return nil, errors.Errorf("%d.auth_service.github", status)
+	}
+
+	return s.UserStore.FindByGithubUUID(githubUser.UUID())
 }

@@ -16,8 +16,8 @@ type Context struct {
 type Service interface {
 	Find(req *FindRequest) (*model.User, error)
 	Save(req *SaveRequest) (*model.User, error)
-	FindByAuthToken(token string) (*model.User, error)
 	GetAuthorization() *GetAuthorizationResponse
+	FindByAuthToken(token string) (*model.User, error)
 }
 
 type service struct {
