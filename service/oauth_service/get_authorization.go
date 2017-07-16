@@ -4,7 +4,7 @@ import (
 	neturl "net/url"
 )
 
-// Request is a request object for ...
+// GetAuthorizationResponse is a response object for ...
 type GetAuthorizationResponse struct {
 	URL string `json:"url"`
 }
@@ -14,6 +14,7 @@ const (
 	endpoint = "https://github.com/login/oauth/authorize"
 )
 
+// GetAuthorization return the url for oauth
 func (s *service) GetAuthorization() *GetAuthorizationResponse {
 	response := GetAuthorizationResponse{}
 

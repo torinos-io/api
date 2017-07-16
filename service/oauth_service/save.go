@@ -10,11 +10,12 @@ import (
 	"github.com/torinos-io/api/type/model"
 )
 
-// Request is a request object for ...
+// SaveRequest is a request object for ...
 type SaveRequest struct {
 	AuthorizationCode string `json:"authorization_code"`
 }
 
+// Save store the user
 func (s *service) Save(req *SaveRequest) (*model.User, error) {
 
 	token, err := s.exchangeCodeForAccessToken(req.AuthorizationCode)
