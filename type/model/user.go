@@ -6,5 +6,6 @@ type User struct {
 	GithubUUID string `json:"github_uuid"`
 
 	UserName          string `json:"user_name"`
+	Email             string `json:"email"`
 	GithubAccessToken string `json:"github_access_token"`
 }
