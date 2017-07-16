@@ -11,3 +11,7 @@ type FindRequest struct {
 func (s *service) Find(req *FindRequest) (*model.User, error) {
 	return s.UserStore.FindByGithubUser(req.UUID)
 }
+
+func (s *service) FindByAuthToken(token string) (*model.User, error) {
+	return s.UserStore.FindByGithubUser(token)
+}
