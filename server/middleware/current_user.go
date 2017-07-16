@@ -6,6 +6,7 @@ import (
 	oauth_service "github.com/torinos-io/api/service/oauth_service"
 	user_store "github.com/torinos-io/api/store/user_store"
 	"github.com/torinos-io/api/type/system"
+	"github.com/torinos-io/api/type/model"
 )
 
 const (
@@ -38,4 +39,20 @@ func SetCurrentUser(appContext *system.AppContext) gin.HandlerFunc {
 		c.Set(currentUserContextName, user)
 		c.Next()
 	}
+}
+
+func GetCurrentUser(c *gin.Context) *model.User {
+	v, exists := c.Get(currentUserContextName)
+
+	if !exists {
+		return nil
+	}
+
+	user, ok := v.(*model.User)
+
+	if !ok {
+		return nil
+	}
+
+	return user
 }
