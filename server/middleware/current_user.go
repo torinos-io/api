@@ -9,13 +9,12 @@ import (
 )
 
 const (
-	currentuser = "CurrentUser"
+	currentUserContextName = "CurrentUser"
 )
 
 // SetCurrentUser sets current authenticated user from authorization header
 func SetCurrentUser(appContext *system.AppContext) gin.HandlerFunc {
 	return func(c *gin.Context) {
-
 		h := c.GetHeader("Authorization")
 
 		if h == "" {
@@ -36,7 +35,7 @@ func SetCurrentUser(appContext *system.AppContext) gin.HandlerFunc {
 			return
 		}
 
-		c.Set(currentuser, user)
+		c.Set(currentUserContextName, user)
 		c.Next()
 	}
 }
