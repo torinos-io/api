@@ -5,7 +5,7 @@ metadata:
   namespace: torinos-api
 spec:
   tls:
-    - secretName: tls
+    - secretName: tls2
   backend:
     serviceName: torinos-api
     servicePort: 80
