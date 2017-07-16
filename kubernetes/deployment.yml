@@ -58,3 +58,13 @@ spec:
                 secretKeyRef:
                   name: dotenv
                   key: app-honeybadger-api-key
+            - name: APP_GITHUB_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: dotenv
+                  key: app-github-client-key
+            - name: APP_GITHUB_CLIENT_SECRET
+               valueFrom:
+                 secretKeyRef:
+                  name: dotenv
+                  key: app-github-client-secret
