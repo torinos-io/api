@@ -42,7 +42,7 @@ func Authenticate(c *gin.Context) {
 	resp, err := service.Save(req)
 
 	if err != nil {
-		c.AbortWithError(http.StatusBadRequest, errors.Wrap(err, 0))
+		c.Error(err)
 		return
 	}
 
