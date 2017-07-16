@@ -25,7 +25,7 @@ func (s *service) FindByAccessToken(token string) (*model.User, error) {
 	githubUser := &model.GithubUser{}
 
 	resp, _ := resty.
-		SetDebug(s.Config.Env == "development").
+		SetDebug(s.Config.IsDevelopment()).
 		R().
 		SetHeader("Authorization", fmt.Sprintf("token %s", token)).
 		SetResult(githubUser).
