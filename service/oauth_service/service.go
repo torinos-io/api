@@ -12,7 +12,7 @@ type Context struct {
 	Config    *system.Config
 }
 
-// Service is an interface for ...
+// Service is an interface for authentication
 type Service interface {
 	Find(req *FindRequest) (*model.User, error)
 	Save(req *SaveRequest) (*model.User, error)

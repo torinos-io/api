@@ -11,7 +11,7 @@ import (
 	user_store "github.com/torinos-io/api/store/user_store"
 )
 
-// GetAuthorization authorize user
+// GetAuthorization authorizes user
 func GetAuthorization(c *gin.Context) {
 	ac := middleware.GetAppContext(c)
 	userStore := user_store.New(ac.MainDB)
