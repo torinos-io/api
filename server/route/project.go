@@ -43,6 +43,7 @@ func CreateProject(c *gin.Context) {
 
 	service.Upload(uploadRequest)
 
+	// TODO: Create response by service
 	cartfileName := ""
 	podFileName := ""
 
