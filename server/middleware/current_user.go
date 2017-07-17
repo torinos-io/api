@@ -1,6 +1,8 @@
 package middleware
 
 import (
+	"strings"
+	
 	"github.com/gin-gonic/gin"
 
 	oauth_service "github.com/torinos-io/api/service/oauth_service"
@@ -17,19 +19,28 @@ const (
 func SetCurrentUser(appContext *system.AppContext) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		h := c.GetHeader("Authorization")
-
+		
 		if h == "" {
 			c.Next()
 			return
 		}
-
+		
+		splited := strings.Split(h, "Bearer")
+		
+		if len(splited) < 2 {
+			c.Next()
+			return
+		}
+		
+		token := splited[1]
+		
 		userStore := user_store.New(appContext.MainDB)
 		service := oauth_service.New(oauth_service.Context{
 			Config:    appContext.Config,
 			UserStore: userStore,
 		})
 
-		user, err := service.FindByAccessToken(h)
+		user, err := service.FindByAccessToken(token)
 
 		if err != nil {
 			c.Next()
