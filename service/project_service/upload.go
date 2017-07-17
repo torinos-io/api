@@ -13,6 +13,6 @@ type UploadRequest struct {
 
 // Upload uploads files to Analyze service
 func (s *service) Upload(req *UploadRequest) error {
-	// TODO: ここでFileをtext化する
+	// TODO: Make files to texts
 	return s.ProjectStore.Upload()
 }
