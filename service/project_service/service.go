@@ -16,7 +16,7 @@ type Context struct {
 type Service interface {
 	Find(req *FindRequest) (*model.Project, error)
 	FindAll(req *FindAllRequest) (*[]model.Project, error)
-	Upload() error
+	Upload(req *UploadRequest) error
 }
 
 type service struct {
