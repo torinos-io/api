@@ -18,7 +18,7 @@ type Project struct {
 
 	CartfileContent       string `json:"cartfile_content"`
 	PodfileLockContent    string `json:"podfile_content"`
-	PBXprojectContent     string `json:"pbxporj_content"`
+	PBXprojectContent     string `json:"pbxproj_content"`
 	SupportedSwiftVersion string `json:"supported_swift_version"`
 	Repository            string `json:"repository"`
 	LastFetchedAt         Time   `json:"last_fetched_at"`

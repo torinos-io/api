@@ -8,7 +8,7 @@ import (
 type UploadRequest struct {
 	CartfileContent    *multipart.FileHeader `json:"cartfile_content"`
 	PodfileLockContent *multipart.FileHeader `json:"podfile_content"`
-	PBXprojectContent  *multipart.FileHeader `json:"pbxporj_content"`
+	PBXprojectContent  *multipart.FileHeader `json:"pbxproj_content"`
 }
 
 // Upload uploads files to Analyze service

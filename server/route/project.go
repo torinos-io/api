@@ -23,7 +23,7 @@ func CreateProject(c *gin.Context) {
 
 	cartfile, cartErr := c.FormFile("cartfile_content")
 	podfile, podErr := c.FormFile("podfile_content")
-	pbxproj, pbxprojErr := c.FormFile("pbxporj_content")
+	pbxproj, pbxprojErr := c.FormFile("pbxproj_content")
 
 	if pbxprojErr != nil {
 		c.AbortWithError(http.StatusUnprocessableEntity, errors.Wrap(pbxprojErr, 0))
@@ -45,7 +45,9 @@ func CreateProject(c *gin.Context) {
 
 	//TODO: Return response immediately
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Project created",
+		"pbxprojfile_name": pbxproj.Filename,
+		"cartfile_name": cartfile.Filename,
+		"podfile_name": podfile.Filename,
 	})
 }
 
