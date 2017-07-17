@@ -44,7 +44,7 @@ func SetCurrentUser(appContext *system.AppContext) gin.HandlerFunc {
 			Config:    appContext.Config,
 			UserStore: userStore,
 		})
-		
+
 		user, err := service.FindByAccessToken(m[1])
 
 		if err != nil {
