@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"strings"
-	
+	"regexp"
+
 	"github.com/gin-gonic/gin"
 
 	oauth_service "github.com/torinos-io/api/service/oauth_service"
@@ -18,30 +18,34 @@ const (
 // SetCurrentUser sets current authenticated user from authorization header
 func SetCurrentUser(appContext *system.AppContext) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		authorizationHeaderPattern := regexp.MustCompile(`^Bearer\s(?:["']?)([^"]+)(?:["']?)$`)
+
 		h := c.GetHeader("Authorization")
-		
+
 		if h == "" {
 			c.Next()
 			return
 		}
-		
-		splited := strings.Split(h, "Bearer")
-		
-		if len(splited) < 2 {
+
+		m := authorizationHeaderPattern.FindStringSubmatch(h)
+
+		if len(m) != 2 {
 			c.Next()
 			return
 		}
-		
-		
-		token := strings.TrimSpace(splited[1])
-		
+
+		if m[1] == "" {
+			c.Next()
+			return
+		}
+
 		userStore := user_store.New(appContext.MainDB)
 		service := oauth_service.New(oauth_service.Context{
 			Config:    appContext.Config,
 			UserStore: userStore,
 		})
-
-		user, err := service.FindByAccessToken(token)
+		
+		user, err := service.FindByAccessToken(m[1])
 
 		if err != nil {
 			c.Next()
