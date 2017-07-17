@@ -32,7 +32,8 @@ func SetCurrentUser(appContext *system.AppContext) gin.HandlerFunc {
 			return
 		}
 		
-		token := splited[1]
+		
+		token := strings.TrimSpace(splited[1])
 		
 		userStore := user_store.New(appContext.MainDB)
 		service := oauth_service.New(oauth_service.Context{
