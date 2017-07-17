@@ -43,11 +43,21 @@ func CreateProject(c *gin.Context) {
 
 	service.Upload(uploadRequest)
 
+	cartfileName := ""
+	podFileName := ""
+
+	if cartfile != nil {
+		cartfileName = cartfile.Filename
+	}
+	if podfile != nil {
+		podFileName = podfile.Filename
+	}
+
 	//TODO: Return response immediately
 	c.JSON(http.StatusOK, gin.H{
 		"pbxprojfile_name": pbxproj.Filename,
-		"cartfile_name": cartfile.Filename,
-		"podfile_name": podfile.Filename,
+		"cartfile_name":    cartfileName,
+		"podfile_name":     podFileName,
 	})
 }
 
