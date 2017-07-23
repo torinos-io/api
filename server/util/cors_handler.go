@@ -12,7 +12,7 @@ func NewCorsHandler(handler http.Handler, allowOrigins []string) http.Handler {
 		AllowedOrigins:   allowOrigins,
 		AllowCredentials: true,
 		AllowedMethods:   []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
-		AllowedHeaders:   []string{"Access-Control-Allow-Origin", "Content-Type", "Accept"},
+		AllowedHeaders:   []string{"Access-Control-Allow-Origin", "Content-Type", "Accept", "Authorization"},
 		Debug:            false,
 	})
 
