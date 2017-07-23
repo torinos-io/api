@@ -4,6 +4,7 @@ import (
 	"mime/multipart"
 
 	"github.com/guregu/null"
+
 	"github.com/torinos-io/api/type/model"
 )
 
