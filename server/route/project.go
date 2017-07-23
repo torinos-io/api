@@ -10,6 +10,7 @@ import (
 	"github.com/torinos-io/api/server/middleware"
 	project_service "github.com/torinos-io/api/service/project_service"
 	project_store "github.com/torinos-io/api/store/project_store"
+	"github.com/torinos-io/api/type/model"
 )
 
 // CreateProject creates project
@@ -42,29 +43,25 @@ func CreateProject(c *gin.Context) {
 		PbxprojContent:     pbxproj,
 	}
 
+	var project *model.Project
+	var err error
+
 	if user := middleware.GetCurrentUser(c); user != nil {
-		service.Upload(null.IntFrom(int64(user.ID)), uploadRequest)
+		p, e := service.Upload(null.IntFrom(int64(user.ID)), uploadRequest)
+		project = p
+		err = e
 	} else {
-		service.Upload(null.Int{}, uploadRequest)
+		p, e := service.Upload(null.Int{}, uploadRequest)
+		project = p
+		err = e
 	}
 
-	// TODO: Create response by service
-	cartfileName := ""
-	podFileName := ""
-
-	if cartfile != nil {
-		cartfileName = cartfile.Filename
-	}
-	if podfile != nil {
-		podFileName = podfile.Filename
+	if err != nil {
+		c.AbortWithError(http.StatusUnprocessableEntity, err)
+		return
 	}
 
-	//TODO: Return response immediately
-	c.JSON(http.StatusOK, gin.H{
-		"pbxprojfile_name": pbxproj.Filename,
-		"cartfile_name":    cartfileName,
-		"podfile_name":     podFileName,
-	})
+	c.JSON(http.StatusOK, project)
 }
 
 // GetProject returns the project

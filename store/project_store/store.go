@@ -34,9 +34,18 @@ func New(db *gorm.DB) Store {
 // Upload uploads files to Analyze service
 func (s *concreteStore) Upload(userID null.Int, files *model.UploadFiles) (*model.Project, error) {
 	project := &model.Project{}
+	finder := s.db.Where("repository = ?", files.RepositoryName).First(project)
 
-	project.UUID = uuid.NewV4().String()
-	project.UserID = userID
+	err := finder.Error
+
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return project, errors.Wrap(err, 0)
+	}
+
+	if err == gorm.ErrRecordNotFound {
+		project.UUID = uuid.NewV4().String()
+		project.UserID = userID
+	}
 
 	if carFileContent, err := readFile(files.CartfileContent); err == nil {
 		project.CartfileContent = carFileContent
