@@ -2,6 +2,7 @@ package route
 
 import (
 	"net/http"
+	"unicode/utf8"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-errors/errors"
@@ -67,11 +68,31 @@ func CreateProject(c *gin.Context) {
 // GetProject returns the project
 func GetProject(c *gin.Context) {
 	uuid := c.Param("uuid")
-	c.JSON(http.StatusOK, gin.H{
-		"message": "GetProject",
-		"uuid":    uuid,
-		"result":  "",
+	if utf8.RuneCountInString(uuid) == 0 {
+		c.AbortWithStatus(http.StatusUnprocessableEntity)
+		return
+	}
+
+	ac := middleware.GetAppContext(c)
+
+	projectStore := project_store.New(ac.MainDB)
+	service := project_service.New(project_service.Context{
+		Config:       ac.Config,
+		ProjectStore: projectStore,
 	})
+
+	request := &project_service.FindRequest{
+		UUID: uuid,
+	}
+
+	project, err := service.Find(request)
+
+	if err != nil {
+		c.AbortWithError(http.StatusNotFound, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, project)
 }
 
 // GetProjects returns all projects
