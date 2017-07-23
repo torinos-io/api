@@ -8,6 +8,7 @@ import (
 	"github.com/go-errors/errors"
 	"github.com/guregu/null"
 	"github.com/jinzhu/gorm"
+	"github.com/satori/go.uuid"
 
 	"github.com/torinos-io/api/type/model"
 )
@@ -34,6 +35,7 @@ func New(db *gorm.DB) Store {
 func (s *concreteStore) Upload(userID null.Int, files *model.UploadFiles) (*model.Project, error) {
 	project := &model.Project{}
 
+	project.UUID = uuid.NewV4().String()
 	project.UserID = userID
 
 	if carFileContent, err := readFile(files.CartfileContent); err == nil {
@@ -44,8 +46,8 @@ func (s *concreteStore) Upload(userID null.Int, files *model.UploadFiles) (*mode
 		project.PodfileLockContent = podFileLockContent
 	}
 
-	if pbxProjectContent, err := readFile(files.PBXprojectContent); err == nil {
-		project.PBXprojectContent = pbxProjectContent
+	if pbxProjContent, err := readFile(files.PbxprojContent); err == nil {
+		project.PbxprojContent = pbxProjContent
 	}
 
 	db := s.db.Save(project)

@@ -6,5 +6,5 @@ import "mime/multipart"
 type UploadFiles struct {
 	CartfileContent    *multipart.FileHeader
 	PodfileLockContent *multipart.FileHeader
-	PBXprojectContent  *multipart.FileHeader
+	PbxprojContent     *multipart.FileHeader
 }

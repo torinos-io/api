@@ -39,7 +39,7 @@ func CreateProject(c *gin.Context) {
 	uploadRequest := &project_service.UploadRequest{
 		CartfileContent:    cartfile,
 		PodfileLockContent: podfile,
-		PBXprojectContent:  pbxproj,
+		PbxprojContent:     pbxproj,
 	}
 
 	if user := middleware.GetCurrentUser(c); user != nil {

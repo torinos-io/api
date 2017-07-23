@@ -1,5 +1,5 @@
-hash: e2eb76e52ef12ceaaee2c055664e0a09268ed298eb2fb4a34250589e8c591c3c
-updated: 2017-07-16T13:16:34.552830534Z
+hash: 4a57e0942d9209e27d1121f72e397dbac5e750082d891ad4839749c19a4686c8
+updated: 2017-07-23T08:48:03.673438398Z
 imports:
 - name: github.com/asaskevich/govalidator
   version: aa5cce4a76edb1a5acecab1870c17abbffb5419e
@@ -68,6 +68,8 @@ imports:
   version: e790cca94e6cc75c7064b1332e63811d4aae1a53
 - name: github.com/rs/cors
   version: 8dd4211afb5d08dbb39a533b9bb9e4b486351df6
+- name: github.com/satori/go.uuid
+  version: 879c5887cd475cd7864858769793b2ceb0d44feb
 - name: github.com/shirou/gopsutil
   version: 3dd8bd46d9a1ccbd37b3ba6e3dc1dc7d37ba8dc5
   subpackages:
@@ -79,7 +81,7 @@ imports:
   subpackages:
   - codec
 - name: golang.org/x/net
-  version: f01ecb60fe3835d80d9a0b7b2bf24b228c89260e
+  version: f315505cf3349909cdf013ea56690da34e96a451
   subpackages:
   - publicsuffix
 - name: golang.org/x/sys
