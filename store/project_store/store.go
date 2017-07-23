@@ -19,7 +19,7 @@ type concreteStore struct {
 
 // Store is an interface for CRUD category records
 type Store interface {
-	Upload(userID null.Int, files *model.UploadFiles) (*model.Project, error)
+	Upload(userID null.Int, files *model.UploadedData) (*model.Project, error)
 	GetAllProjectsByUserID(userID null.Int) (*[]model.Project, error)
 	GetProjectByProjectUUID(uuid string) (*model.Project, error)
 }
@@ -31,10 +31,10 @@ func New(db *gorm.DB) Store {
 	}
 }
 
-// Upload uploads files to Analyze service
-func (s *concreteStore) Upload(userID null.Int, files *model.UploadFiles) (*model.Project, error) {
+// Upload uploads files to Analyze service and save project
+func (s *concreteStore) Upload(userID null.Int, data *model.UploadedData) (*model.Project, error) {
 	project := &model.Project{}
-	finder := s.db.Where("repository = ?", files.RepositoryName).First(project)
+	finder := s.db.Where("repository = ?", data.RepositoryName).First(project)
 
 	err := finder.Error
 
@@ -47,15 +47,15 @@ func (s *concreteStore) Upload(userID null.Int, files *model.UploadFiles) (*mode
 		project.UserID = userID
 	}
 
-	if carFileContent, err := readFile(files.CartfileContent); err == nil {
+	if carFileContent, err := readFile(data.CartfileContent); err == nil {
 		project.CartfileContent = carFileContent
 	}
 
-	if podFileLockContent, err := readFile(files.PodfileLockContent); err == nil {
+	if podFileLockContent, err := readFile(data.PodfileLockContent); err == nil {
 		project.PodfileLockContent = podFileLockContent
 	}
 
-	if pbxProjContent, err := readFile(files.PbxprojContent); err == nil {
+	if pbxProjContent, err := readFile(data.PbxprojContent); err == nil {
 		project.PbxprojContent = pbxProjContent
 	}
 
@@ -65,7 +65,7 @@ func (s *concreteStore) Upload(userID null.Int, files *model.UploadFiles) (*mode
 		return project, errors.Wrap(err, 0)
 	}
 
-	// TODO: Upload files to analyzer server
+	// TODO: Upload data to analyzer server
 
 	return project, nil
 }

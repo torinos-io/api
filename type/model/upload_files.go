@@ -2,8 +2,8 @@ package model
 
 import "mime/multipart"
 
-// UploadFiles contains file uploaded files
-type UploadFiles struct {
+// UploadedData contains file uploaded files
+type UploadedData struct {
 	CartfileContent    *multipart.FileHeader
 	PodfileLockContent *multipart.FileHeader
 	PbxprojContent     *multipart.FileHeader
