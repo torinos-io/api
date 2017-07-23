@@ -2,6 +2,9 @@ package service
 
 import (
 	"mime/multipart"
+
+	"github.com/torinos-io/api/type/model"
+	"github.com/guregu/null"
 )
 
 // UploadRequest holds uploaded files
@@ -12,7 +15,6 @@ type UploadRequest struct {
 }
 
 // Upload uploads files to Analyze service
-func (s *service) Upload(req *UploadRequest) error {
-	// TODO: Make files to texts
-	return s.ProjectStore.Upload()
+func (s *service) Upload(userID null.Int, req *UploadRequest) (*model.Project, error) {
+	return s.ProjectStore.Upload(userID, req)
 }

@@ -1,10 +1,15 @@
 package store
 
 import (
+	"bufio"
+	"fmt"
+	"mime/multipart"
+
 	"github.com/go-errors/errors"
 	"github.com/guregu/null"
 	"github.com/jinzhu/gorm"
 
+	project_service "github.com/torinos-io/api/service/project_service"
 	"github.com/torinos-io/api/type/model"
 )
 
@@ -14,7 +19,7 @@ type concreteStore struct {
 
 // Store is an interface for CRUD category records
 type Store interface {
-	Upload() error
+	Upload(userID null.Int, req *project_service.UploadRequest) (*model.Project, error)
 	GetAllProjectsByUserID(userID null.Int) (*[]model.Project, error)
 	GetProjectByProjectUUID(uuid string) (*model.Project, error)
 }
@@ -27,9 +32,36 @@ func New(db *gorm.DB) Store {
 }
 
 // Upload uploads files to Analyze service
-func (s *concreteStore) Upload() error {
-	// TODO: Upload to Analyze server
-	return nil
+func (s *concreteStore) Upload(userID null.Int, req *project_service.UploadRequest) (*model.Project, error) {
+	project := &model.Project{}
+
+	project.UserID = userID
+
+	if carFileContent, err := readFile(req.CartfileContent); err != nil {
+		return nil, err
+	} else {
+		project.CartfileContent = carFileContent
+	}
+
+	if podFileLockContent, err := readFile(req.PodfileLockContent); err != nil {
+		return nil, err
+	} else {
+		project.PodfileLockContent = podFileLockContent
+	}
+
+	if pbxProjectContent, err := readFile(req.PBXprojectContent); err != nil {
+		return nil, err
+	} else {
+		project.PBXprojectContent = pbxProjectContent
+	}
+
+	db := s.db.Save(project)
+
+	if err := db.Error; err != nil {
+		return project, errors.Wrap(err, 0)
+	}
+
+	return project, nil
 }
 
 // GetAllProjectsByUserID returns all projects
@@ -55,4 +87,33 @@ func (s *concreteStore) GetProjectByProjectUUID(uuid string) (*model.Project, er
 	}
 
 	return project, nil
+}
+
+func readFile(fileHeader *multipart.FileHeader) (string, error) {
+	if fileHeader == nil {
+		return nil, nil
+	}
+
+	file, err := fileHeader.Open()
+
+	defer file.Close()
+
+	if err != nil {
+		return nil, errors.Wrap(err, 0)
+	}
+
+	scanner := bufio.NewScanner(file)
+	var content string
+
+	for scanner.Scan() {
+		content += scanner.Text()
+	}
+
+	if err := scanner.Err(); err != nil {
+		return nil, errors.Wrap(err, 0)
+	}
+
+	fmt.Println(content)
+
+	return content, nil
 }

@@ -1,6 +1,8 @@
 package service
 
 import (
+	"github.com/guregu/null"
+
 	project_store "github.com/torinos-io/api/store/project_store"
 	"github.com/torinos-io/api/type/model"
 	"github.com/torinos-io/api/type/system"
@@ -16,7 +18,7 @@ type Context struct {
 type Service interface {
 	Find(req *FindRequest) (*model.Project, error)
 	FindAll(req *FindAllRequest) (*[]model.Project, error)
-	Upload(req *UploadRequest) error
+	Upload(userID null.Int, req *UploadRequest)(*model.Project, error)
 }
 
 type service struct {
