@@ -4,12 +4,17 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/torinos-io/api/server/middleware"
 )
 
 // GetCurrentUser return the current user
 func GetCurrentUser(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "GetCurrentUser",
-		"user":    "yamada",
-	})
+	user := middleware.GetCurrentUser(c)
+	if user == nil {
+		c.AbortWithStatus(http.StatusUnauthorized)
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
 }

@@ -39,7 +39,7 @@ func (s *service) exchangeCodeForAccessToken(code string) (string, error) {
 	}{}
 
 	resp, _ := resty.
-		SetDebug(s.Config.Env == "development").
+		SetDebug(s.Config.IsDevelopment()).
 		R().
 		SetBody(map[string]string{
 			"code":          code,
@@ -61,7 +61,7 @@ func (s *service) getGithubUser(accessToken string) (*model.GithubUser, error) {
 	githubUser := &model.GithubUser{}
 
 	resp, _ := resty.
-		SetDebug(s.Config.Env == "development").
+		SetDebug(s.Config.IsDevelopment()).
 		R().
 		SetHeader("Authorization", fmt.Sprintf("token %s", accessToken)).
 		SetResult(githubUser).
