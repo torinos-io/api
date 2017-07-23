@@ -85,7 +85,6 @@ func (s *concreteStore) GetAllProjectsByUserID(userID null.Int) (*[]model.Projec
 // GetProjectByProjectUUID returns project
 func (s *concreteStore) GetProjectByProjectUUID(uuid string) (*model.Project, error) {
 	project := &model.Project{}
-
 	finder := s.db.Where("uuid = ?", uuid).Find(project)
 
 	if err := finder.Error; err != nil {
