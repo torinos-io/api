@@ -11,7 +11,6 @@ import (
 	"github.com/satori/go.uuid"
 
 	"github.com/torinos-io/api/type/model"
-	"unicode/utf8"
 )
 
 type concreteStore struct {
@@ -35,12 +34,8 @@ func New(db *gorm.DB) Store {
 // Upload uploads files to Analyze service
 func (s *concreteStore) Upload(userID null.Int, files *model.UploadFiles) (*model.Project, error) {
 	project := &model.Project{}
-	finder := s.db.Where("repository = ?", files.RepositoryName).Find(project)
 
-	if err := finder.Error; err != nil {
-		return project, errors.Wrap(err, 0)
-	}
-
+	project.UUID = uuid.NewV4().String()
 	project.UserID = userID
 
 	if carFileContent, err := readFile(files.CartfileContent); err == nil {
@@ -55,14 +50,7 @@ func (s *concreteStore) Upload(userID null.Int, files *model.UploadFiles) (*mode
 		project.PbxprojContent = pbxProjContent
 	}
 
-	var db *gorm.DB
-
-	if utf8.RuneCountInString(project.Repository) > 0 {
-		db = s.db.Updates(project)
-	} else {
-		project.UUID = uuid.NewV4().String()
-		db = s.db.Save(project)
-	}
+	db := s.db.Save(project)
 
 	if err := db.Error; err != nil {
 		return project, errors.Wrap(err, 0)
