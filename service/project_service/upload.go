@@ -3,8 +3,8 @@ package service
 import (
 	"mime/multipart"
 
-	"github.com/torinos-io/api/type/model"
 	"github.com/guregu/null"
+	"github.com/torinos-io/api/type/model"
 )
 
 // UploadRequest holds uploaded files
@@ -16,5 +16,12 @@ type UploadRequest struct {
 
 // Upload uploads files to Analyze service
 func (s *service) Upload(userID null.Int, req *UploadRequest) (*model.Project, error) {
-	return s.ProjectStore.Upload(userID, req)
+
+	files := &model.UploadFiles{
+		CartfileContent:    req.CartfileContent,
+		PodfileLockContent: req.PodfileLockContent,
+		PBXprojectContent:  req.PBXprojectContent,
+	}
+
+	return s.ProjectStore.Upload(userID, files)
 }

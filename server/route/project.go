@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-errors/errors"
+	"github.com/guregu/null"
 
 	"github.com/torinos-io/api/server/middleware"
 	project_service "github.com/torinos-io/api/service/project_service"
@@ -41,7 +42,11 @@ func CreateProject(c *gin.Context) {
 		PBXprojectContent:  pbxproj,
 	}
 
-	service.Upload(uploadRequest)
+	if user := middleware.GetCurrentUser(c); user != nil {
+		service.Upload(null.IntFrom(int64(user.ID)), uploadRequest)
+	} else {
+		service.Upload(null.Int{}, uploadRequest)
+	}
 
 	// TODO: Create response by service
 	cartfileName := ""

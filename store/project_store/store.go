@@ -3,14 +3,13 @@ package store
 import (
 	"bufio"
 	"fmt"
-	"mime/multipart"
 
 	"github.com/go-errors/errors"
 	"github.com/guregu/null"
 	"github.com/jinzhu/gorm"
 
-	project_service "github.com/torinos-io/api/service/project_service"
 	"github.com/torinos-io/api/type/model"
+	"mime/multipart"
 )
 
 type concreteStore struct {
@@ -19,7 +18,7 @@ type concreteStore struct {
 
 // Store is an interface for CRUD category records
 type Store interface {
-	Upload(userID null.Int, req *project_service.UploadRequest) (*model.Project, error)
+	Upload(userID null.Int, files *model.UploadFiles) (*model.Project, error)
 	GetAllProjectsByUserID(userID null.Int) (*[]model.Project, error)
 	GetProjectByProjectUUID(uuid string) (*model.Project, error)
 }
@@ -32,26 +31,20 @@ func New(db *gorm.DB) Store {
 }
 
 // Upload uploads files to Analyze service
-func (s *concreteStore) Upload(userID null.Int, req *project_service.UploadRequest) (*model.Project, error) {
+func (s *concreteStore) Upload(userID null.Int, files *model.UploadFiles) (*model.Project, error) {
 	project := &model.Project{}
 
 	project.UserID = userID
 
-	if carFileContent, err := readFile(req.CartfileContent); err != nil {
-		return nil, err
-	} else {
+	if carFileContent, err := readFile(files.CartfileContent); err == nil {
 		project.CartfileContent = carFileContent
 	}
 
-	if podFileLockContent, err := readFile(req.PodfileLockContent); err != nil {
-		return nil, err
-	} else {
+	if podFileLockContent, err := readFile(files.PodfileLockContent); err == nil {
 		project.PodfileLockContent = podFileLockContent
 	}
 
-	if pbxProjectContent, err := readFile(req.PBXprojectContent); err != nil {
-		return nil, err
-	} else {
+	if pbxProjectContent, err := readFile(files.PBXprojectContent); err == nil {
 		project.PBXprojectContent = pbxProjectContent
 	}
 
@@ -91,7 +84,7 @@ func (s *concreteStore) GetProjectByProjectUUID(uuid string) (*model.Project, er
 
 func readFile(fileHeader *multipart.FileHeader) (string, error) {
 	if fileHeader == nil {
-		return nil, nil
+		return "", nil
 	}
 
 	file, err := fileHeader.Open()
@@ -99,7 +92,7 @@ func readFile(fileHeader *multipart.FileHeader) (string, error) {
 	defer file.Close()
 
 	if err != nil {
-		return nil, errors.Wrap(err, 0)
+		return "", errors.Wrap(err, 0)
 	}
 
 	scanner := bufio.NewScanner(file)
@@ -110,7 +103,7 @@ func readFile(fileHeader *multipart.FileHeader) (string, error) {
 	}
 
 	if err := scanner.Err(); err != nil {
-		return nil, errors.Wrap(err, 0)
+		return "", errors.Wrap(err, 0)
 	}
 
 	fmt.Println(content)
