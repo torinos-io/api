@@ -15,12 +15,12 @@ import (
 
 // CreateProject creates project
 func CreateProject(c *gin.Context) {
-
 	ac := middleware.GetAppContext(c)
-	userStore := project_store.New(ac.MainDB)
+
+	projectStore := project_store.New(ac.MainDB)
 	service := project_service.New(project_service.Context{
 		Config:       ac.Config,
-		ProjectStore: userStore,
+		ProjectStore: projectStore,
 	})
 
 	cartfile, cartErr := c.FormFile("cartfile_content")
@@ -72,4 +72,34 @@ func GetProject(c *gin.Context) {
 		"uuid":    uuid,
 		"result":  "",
 	})
+}
+
+// GetProjects returns all projects
+func GetProjects(c *gin.Context) {
+	user := middleware.GetCurrentUser(c)
+
+	if user == nil {
+		c.AbortWithStatus(http.StatusUnauthorized)
+		return
+	}
+
+	ac := middleware.GetAppContext(c)
+	projectStore := project_store.New(ac.MainDB)
+	service := project_service.New(project_service.Context{
+		Config:       ac.Config,
+		ProjectStore: projectStore,
+	})
+
+	request := &project_service.FindAllRequest{
+		UserID: null.IntFrom(int64(user.ID)),
+	}
+
+	projects, err := service.FindAll(request)
+
+	if err != nil {
+		c.AbortWithError(http.StatusNotFound, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, projects)
 }
