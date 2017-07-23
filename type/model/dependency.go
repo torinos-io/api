@@ -8,8 +8,8 @@ package model
 
 // Dependency has project dependency and source distination.
 type Dependency struct {
-	ProjectUUID          string `json:"project_uuid"`
-	DependentProjectUUID string `json:"dependent_project_uuid"`
+	ProjectUUID          string `json:"project_uuid" gorm:"ForeignKey:UUID"`
+	DependentProjectUUID string `json:"dependent_project_uuid" gorm:"ForeignKey:UUID"`
 
 	SourceCD int `json:"source_cd"`
 }
