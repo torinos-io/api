@@ -11,6 +11,7 @@ import (
 	"github.com/satori/go.uuid"
 
 	"github.com/torinos-io/api/type/model"
+	"unicode/utf8"
 )
 
 type concreteStore struct {
@@ -34,8 +35,12 @@ func New(db *gorm.DB) Store {
 // Upload uploads files to Analyze service
 func (s *concreteStore) Upload(userID null.Int, files *model.UploadFiles) (*model.Project, error) {
 	project := &model.Project{}
+	finder := s.db.Where("repository = ?", files.RepositoryName).Find(project)
 
-	project.UUID = uuid.NewV4().String()
+	if err := finder.Error; err != nil {
+		return project, errors.Wrap(err, 0)
+	}
+
 	project.UserID = userID
 
 	if carFileContent, err := readFile(files.CartfileContent); err == nil {
@@ -50,7 +55,14 @@ func (s *concreteStore) Upload(userID null.Int, files *model.UploadFiles) (*mode
 		project.PbxprojContent = pbxProjContent
 	}
 
-	db := s.db.Save(project)
+	var db *gorm.DB
+
+	if utf8.RuneCountInString(project.Repository) > 0 {
+		db = s.db.Updates(project)
+	} else {
+		project.UUID = uuid.NewV4().String()
+		db = s.db.Save(project)
+	}
 
 	if err := db.Error; err != nil {
 		return project, errors.Wrap(err, 0)
@@ -62,7 +74,7 @@ func (s *concreteStore) Upload(userID null.Int, files *model.UploadFiles) (*mode
 // GetAllProjectsByUserID returns all projects
 func (s *concreteStore) GetAllProjectsByUserID(userID null.Int) (*[]model.Project, error) {
 	projects := &[]model.Project{}
-	finder := s.db.Where("user_id", userID).Find(projects)
+	finder := s.db.Where("user_id = ?", userID).Find(projects)
 
 	if err := finder.Error; err != nil {
 		return projects, errors.Wrap(err, 0)
@@ -75,7 +87,7 @@ func (s *concreteStore) GetAllProjectsByUserID(userID null.Int) (*[]model.Projec
 func (s *concreteStore) GetProjectByProjectUUID(uuid string) (*model.Project, error) {
 	project := &model.Project{}
 
-	finder := s.db.Where("uuid", uuid).Find(project)
+	finder := s.db.Where("uuid = ?", uuid).Find(project)
 
 	if err := finder.Error; err != nil {
 		return project, errors.Wrap(err, 0)
