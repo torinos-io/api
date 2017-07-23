@@ -13,8 +13,8 @@ import (
 
 // Project has uploaded repository information.
 type Project struct {
-	UUID   string   `json:"uuid"`
-	UserID null.Int `json:"user_id"`
+	UUID   string   `json:"uuid" gorm:"primary_key"`
+	UserID null.Int `json:"user_id" gorm:"ForeignKey:ID"`
 
 	CartfileContent       string `json:"cartfile_content"`
 	PodfileLockContent    string `json:"podfile_content"`
