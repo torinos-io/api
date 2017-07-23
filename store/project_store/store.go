@@ -65,6 +65,8 @@ func (s *concreteStore) Upload(userID null.Int, files *model.UploadFiles) (*mode
 		return project, errors.Wrap(err, 0)
 	}
 
+	// TODO: Upload files to analyzer server
+
 	return project, nil
 }
 
