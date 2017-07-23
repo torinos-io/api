@@ -3,13 +3,13 @@ package store
 import (
 	"bufio"
 	"fmt"
+	"mime/multipart"
 
 	"github.com/go-errors/errors"
 	"github.com/guregu/null"
 	"github.com/jinzhu/gorm"
 
 	"github.com/torinos-io/api/type/model"
-	"mime/multipart"
 )
 
 type concreteStore struct {
