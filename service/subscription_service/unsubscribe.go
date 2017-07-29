@@ -2,6 +2,7 @@ package service
 
 import (
 	"github.com/guregu/null"
+
 	"github.com/torinos-io/api/type/model"
 )
 
