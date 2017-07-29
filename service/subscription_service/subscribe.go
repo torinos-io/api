@@ -1,6 +1,9 @@
 package service
 
-import "github.com/torinos-io/api/type/model"
+import (
+	"github.com/guregu/null"
+	"github.com/torinos-io/api/type/model"
+)
 
 // SubscribeRequest holds target project uuid and user's email
 type SubscribeRequest struct {
@@ -10,5 +13,12 @@ type SubscribeRequest struct {
 
 // Subscribe performs subscribe project update
 func (s *service) Subscribe(req *SubscribeRequest, user *model.User) (*model.Subscription, error) {
-	return s.SubscriptionStore.CreateSubscription(user.ID, req.Email, req.ProjectUUID)
+
+	var userID null.Int
+
+	if user != nil {
+		userID = null.IntFrom(int64(user.ID))
+	}
+
+	return s.SubscriptionStore.CreateSubscription(userID, req.Email, req.ProjectUUID)
 }
