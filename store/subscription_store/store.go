@@ -8,6 +8,7 @@ import (
 	"github.com/jinzhu/gorm"
 
 	"github.com/torinos-io/api/type/model"
+	"time"
 )
 
 var emailPattern = regexp.MustCompile(`^(?i:[^ @"<>]+|".*")@(?i:[a-z1-9.])+.(?i:[a-z])+$`)
@@ -19,7 +20,7 @@ type concreteStore struct {
 // Store is an interface for CRUD category records
 type Store interface {
 	CreateSubscription(user *model.User, projectUUID string) (*model.Subscription, error)
-	DeleteSubscription() error
+	DeleteSubscription(user *model.User, projectUUID string) error
 }
 
 // New creates a store
@@ -59,6 +60,24 @@ func (s *concreteStore) CreateSubscription(user *model.User, projectUUID string)
 	return subscription, nil
 }
 
-func (s *concreteStore) DeleteSubscription() error {
+func (s *concreteStore) DeleteSubscription(user *model.User, projectUUID string) error {
+	subscription := &model.Subscription{}
+
+	finder := s.db.
+		Where("user_id = ?", user.ID).
+		Where("project_uuid", projectUUID).
+		Find(subscription)
+
+	if err := finder.Error; err != nil && err != gorm.ErrRecordNotFound {
+		return errors.Wrap(err, 0)
+	}
+
+	subscription.DeletedAt = null.TimeFrom(time.Now())
+	db := s.db.Save(subscription)
+
+	if err := db.Error; err != nil {
+		return errors.Wrap(err, 0)
+	}
+
 	return nil
 }
