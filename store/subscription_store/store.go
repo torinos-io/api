@@ -19,7 +19,7 @@ type concreteStore struct {
 
 // Store is an interface for CRUD category records
 type Store interface {
-	CreateSubscription(user *model.User, projectUUID string) (*model.Subscription, error)
+	CreateSubscription(userID int, email string, projectUUID string) (*model.Subscription, error)
 	DeleteSubscription(user *model.User, projectUUID string) error
 }
 
@@ -30,11 +30,11 @@ func New(db *gorm.DB) Store {
 	}
 }
 
-func (s *concreteStore) CreateSubscription(user *model.User, projectUUID string) (*model.Subscription, error) {
+func (s *concreteStore) CreateSubscription(userID int, email string, projectUUID string) (*model.Subscription, error) {
 	subscription := &model.Subscription{}
 
 	finder := s.db.
-		Where("user_id = ?", user.ID).
+		Where("user_id = ?", userID).
 		Where("project_uuid", projectUUID).
 		Find(subscription)
 
@@ -42,12 +42,12 @@ func (s *concreteStore) CreateSubscription(user *model.User, projectUUID string)
 		return subscription, errors.Wrap(err, 0)
 	}
 
-	if !emailPattern.MatchString(user.Email) {
+	if !emailPattern.MatchString(email) {
 		return subscription, errors.New("Invalid email")
 	}
 
-	subscription.UserID = null.IntFrom(int64(user.ID))
-	subscription.Email = user.Email
+	subscription.UserID = null.IntFrom(int64(userID))
+	subscription.Email = email
 	subscription.DeletedAt = null.Time{}
 	subscription.ProjectUUID = projectUUID
 
