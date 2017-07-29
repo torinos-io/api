@@ -10,6 +10,8 @@ import (
 	"github.com/torinos-io/api/type/model"
 )
 
+var emailPattern = regexp.MustCompile(`^(?i:[^ @"<>]+|".*")@(?i:[a-z1-9.])+.(?i:[a-z])+$`)
+
 type concreteStore struct {
 	db *gorm.DB
 }
@@ -38,8 +40,6 @@ func (s *concreteStore) CreateSubscription(user *model.User, projectUUID string)
 	if err := finder.Error; err != nil && err != gorm.ErrRecordNotFound {
 		return subscription, errors.Wrap(err, 0)
 	}
-
-	emailPattern := regexp.MustCompile(`^(?i:[^ @"<>]+|".*")@(?i:[a-z1-9.])+.(?i:[a-z])+$`)
 
 	if !emailPattern.MatchString(user.Email) {
 		return subscription, errors.New("Invalid email")
