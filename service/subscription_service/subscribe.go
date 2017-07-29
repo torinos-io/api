@@ -14,7 +14,6 @@ type SubscribeRequest struct {
 
 // Subscribe performs subscribe project update
 func (s *service) Subscribe(req *SubscribeRequest, user *model.User) (*model.Subscription, error) {
-
 	var userID null.Int
 
 	if user != nil {
