@@ -2,13 +2,13 @@ package store
 
 import (
 	"regexp"
+	"time"
 
 	"github.com/go-errors/errors"
 	"github.com/guregu/null"
 	"github.com/jinzhu/gorm"
 
 	"github.com/torinos-io/api/type/model"
-	"time"
 )
 
 var emailPattern = regexp.MustCompile(`^(?i:[^ @"<>]+|".*")@(?i:[a-z1-9.])+.(?i:[a-z])+$`)
