@@ -47,7 +47,7 @@ func (s *concreteStore) CreateSubscription(user *model.User, projectUUID string)
 
 	subscription.UserID = null.IntFrom(int64(user.ID))
 	subscription.Email = user.Email
-	subscription.DeletedAt = nil
+	subscription.DeletedAt = null.Time{}
 	subscription.ProjectUUID = projectUUID
 
 	db := s.db.Save(subscription)

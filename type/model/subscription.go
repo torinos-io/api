@@ -10,6 +10,6 @@ type Subscription struct {
 	UserID      null.Int `json:"user_id"`
 	ProjectUUID string   `json:"project_uuid" gorm:"ForeignKey:UUID"`
 
-	Email     string `json:"email"`
-	DeletedAt Time   `json:"deleted_at"`
+	Email     string    `json:"email"`
+	DeletedAt null.Time `json:"deleted_at"`
 }
