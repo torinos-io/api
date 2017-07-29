@@ -1,9 +1,9 @@
 package service
 
 import (
+	subscription_store "github.com/torinos-io/api/store/subscription_store"
 	"github.com/torinos-io/api/type/model"
 	"github.com/torinos-io/api/type/system"
-	subscription_store "github.com/torinos-io/api/store/subscription_store"
 )
 
 // Context holds interfaces of external services
