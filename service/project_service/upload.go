@@ -17,7 +17,6 @@ type UploadRequest struct {
 
 // Upload uploads files to Analyze service
 func (s *service) Upload(userID null.Int, req *UploadRequest) (*model.Project, error) {
-
 	files := &model.UploadedData{
 		CartfileContent:    req.CartfileContent,
 		PodfileLockContent: req.PodfileLockContent,
