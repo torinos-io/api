@@ -66,7 +66,7 @@ func CreateProject(c *gin.Context) {
 }
 
 // GetProject returns the project
-func GetProject(c *gin.Context) {
+func ListProjects(c *gin.Context) {
 	uuid := c.Param("uuid")
 	if utf8.RuneCountInString(uuid) == 0 {
 		c.AbortWithStatus(http.StatusUnprocessableEntity)
