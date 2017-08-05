@@ -10,7 +10,6 @@ import (
 	"github.com/torinos-io/api/server/middleware"
 	project_service "github.com/torinos-io/api/service/project_service"
 	project_store "github.com/torinos-io/api/store/project_store"
-	"github.com/torinos-io/api/type/model"
 )
 
 // CreateProject creates project
@@ -41,8 +40,9 @@ func CreateProject(c *gin.Context) {
 		request.PodfileLockContent = podFile
 	}
 
-	var project *model.Project
-	var err error
+	name, _ := c.GetPostForm("repository_name")
+
+	request.RepositoryName = name
 
 	userID := null.Int{}
 
@@ -51,13 +51,11 @@ func CreateProject(c *gin.Context) {
 		userID.Valid = true
 	}
 
-	service.Upload(userID, request)
-	if err != nil {
+	if project, err := service.Upload(userID, request); err != nil {
 		c.Error(err)
-		return
+	} else {
+		c.JSON(http.StatusOK, project)
 	}
-
-	c.JSON(http.StatusOK, project)
 }
 
 // GetProject returns the project

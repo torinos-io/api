@@ -43,6 +43,9 @@ func (s *concreteStore) Upload(userID null.Int, data *model.UploadedData) (*mode
 		project.UserID = userID
 	}
 
+	project.PodfileLockContent = data.PodfileLockContent
+	project.CartfileContent = data.CartfileContent
+
 	db := s.db.Save(project)
 
 	if err := db.Error; err != nil {
