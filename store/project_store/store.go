@@ -55,10 +55,6 @@ func (s *concreteStore) Upload(userID null.Int, data *model.UploadedData) (*mode
 		project.PodfileLockContent = podFileLockContent
 	}
 
-	if pbxProjContent, err := readFile(data.PbxprojContent); err == nil {
-		project.PbxprojContent = pbxProjContent
-	}
-
 	db := s.db.Save(project)
 
 	if err := db.Error; err != nil {

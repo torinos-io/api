@@ -12,7 +12,6 @@ import (
 type UploadRequest struct {
 	CartfileContent    *multipart.FileHeader `json:"cartfile_content"`
 	PodfileLockContent *multipart.FileHeader `json:"podfile_content"`
-	PbxprojContent     *multipart.FileHeader `json:"pbxproj_content"`
 	RepositoryName     string                `json:"repository_name"`
 }
 
@@ -22,7 +21,6 @@ func (s *service) Upload(userID null.Int, req *UploadRequest) (*model.Project, e
 	files := &model.UploadedData{
 		CartfileContent:    req.CartfileContent,
 		PodfileLockContent: req.PodfileLockContent,
-		PbxprojContent:     req.PbxprojContent,
 		RepositoryName:     req.RepositoryName,
 	}
 

@@ -26,12 +26,6 @@ func CreateProject(c *gin.Context) {
 
 	cartfile, cartErr := c.FormFile("cartfile_content")
 	podfile, podErr := c.FormFile("podfile_content")
-	pbxproj, pbxprojErr := c.FormFile("pbxproj_content")
-
-	if pbxprojErr != nil {
-		c.AbortWithError(http.StatusUnprocessableEntity, errors.Wrap(pbxprojErr, 0))
-		return
-	}
 
 	if cartErr != nil && podErr != nil {
 		c.AbortWithError(http.StatusUnprocessableEntity, errors.New("Podfile and Cartfile is empty"))
@@ -41,7 +35,6 @@ func CreateProject(c *gin.Context) {
 	uploadRequest := &project_service.UploadRequest{
 		CartfileContent:    cartfile,
 		PodfileLockContent: podfile,
-		PbxprojContent:     pbxproj,
 	}
 
 	var project *model.Project
