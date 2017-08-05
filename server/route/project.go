@@ -64,7 +64,7 @@ func CreateProject(c *gin.Context) {
 }
 
 // GetProject returns the project
-func ListProjects(c *gin.Context) {
+func GetProject(c *gin.Context) {
 	uuid := c.Param("uuid")
 	if utf8.RuneCountInString(uuid) == 0 {
 		c.AbortWithStatus(http.StatusUnprocessableEntity)
@@ -93,8 +93,8 @@ func ListProjects(c *gin.Context) {
 	c.JSON(http.StatusOK, project)
 }
 
-// GetProjects returns all projects
-func GetProjects(c *gin.Context) {
+// ListProjects returns all projects
+func ListProjects(c *gin.Context) {
 	user := middleware.GetCurrentUser(c)
 
 	if user == nil {
