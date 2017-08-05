@@ -1,12 +1,10 @@
 package route
 
 import (
-	"net/http"
-	"unicode/utf8"
-
 	"github.com/gin-gonic/gin"
 	"github.com/go-errors/errors"
 	"github.com/guregu/null"
+	"net/http"
 
 	"github.com/torinos-io/api/server/middleware"
 	project_service "github.com/torinos-io/api/service/project_service"
@@ -64,10 +62,6 @@ func CreateProject(c *gin.Context) {
 // GetProject returns the project
 func GetProject(c *gin.Context) {
 	uuid := c.Param("uuid")
-	if utf8.RuneCountInString(uuid) == 0 {
-		c.AbortWithStatus(http.StatusUnprocessableEntity)
-		return
-	}
 
 	ac := middleware.GetAppContext(c)
 
