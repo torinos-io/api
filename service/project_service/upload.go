@@ -21,7 +21,7 @@ type UploadRequest struct {
 // Upload uploads files to Analyze service
 func (s *service) Upload(userID null.Int, req *UploadRequest) (*model.Project, error) {
 	if req.CartfileContent == nil && req.PodfileLockContent == nil {
-		return nil, errors.New("")
+		return nil, errors.New("CartFile and PodFile are both empty.")
 	}
 
 	data := &model.UploadedData{}
@@ -34,8 +34,14 @@ func (s *service) Upload(userID null.Int, req *UploadRequest) (*model.Project, e
 		data.CartfileContent = s
 	}
 
+	data.RepositoryName = req.RepositoryName
+
 	if isEmpty(data.CartfileContent) && isEmpty(data.PodfileLockContent) {
-		return nil, errors.New("")
+		return nil, errors.New("CartFile and PodFile are both empty.")
+	}
+
+	if isEmpty(data.RepositoryName) {
+		return nil, errors.New("Repository name is empty.")
 	}
 
 	return s.ProjectStore.Upload(userID, data)
