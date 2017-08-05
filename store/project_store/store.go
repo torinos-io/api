@@ -1,10 +1,6 @@
 package store
 
 import (
-	"bufio"
-	"fmt"
-	"mime/multipart"
-
 	"github.com/go-errors/errors"
 	"github.com/guregu/null"
 	"github.com/jinzhu/gorm"
@@ -47,14 +43,6 @@ func (s *concreteStore) Upload(userID null.Int, data *model.UploadedData) (*mode
 		project.UserID = userID
 	}
 
-	if carFileContent, err := readFile(data.CartfileContent); err == nil {
-		project.CartfileContent = carFileContent
-	}
-
-	if podFileLockContent, err := readFile(data.PodfileLockContent); err == nil {
-		project.PodfileLockContent = podFileLockContent
-	}
-
 	db := s.db.Save(project)
 
 	if err := db.Error; err != nil {
@@ -88,33 +76,4 @@ func (s *concreteStore) GetProjectByProjectUUID(uuid string) (*model.Project, er
 	}
 
 	return project, nil
-}
-
-func readFile(fileHeader *multipart.FileHeader) (string, error) {
-	if fileHeader == nil {
-		return "", nil
-	}
-
-	file, err := fileHeader.Open()
-
-	defer file.Close()
-
-	if err != nil {
-		return "", errors.Wrap(err, 0)
-	}
-
-	scanner := bufio.NewScanner(file)
-	var content string
-
-	for scanner.Scan() {
-		content += scanner.Text()
-	}
-
-	if err := scanner.Err(); err != nil {
-		return "", errors.Wrap(err, 0)
-	}
-
-	fmt.Println(content)
-
-	return content, nil
 }

@@ -1,8 +1,11 @@
 package service
 
 import (
-	"mime/multipart"
+	"encoding/base64"
+	"io"
+	"unicode/utf8"
 
+	"github.com/go-errors/errors"
 	"github.com/guregu/null"
 
 	"github.com/torinos-io/api/type/model"
@@ -10,18 +13,46 @@ import (
 
 // UploadRequest holds uploaded files
 type UploadRequest struct {
-	CartfileContent    *multipart.FileHeader `json:"cartfile_content"`
-	PodfileLockContent *multipart.FileHeader `json:"podfile_content"`
-	RepositoryName     string                `json:"repository_name"`
+	CartfileContent    io.Reader `json:"-"`
+	PodfileLockContent io.Reader `json:"-"`
+	RepositoryName     string    `json:"repository_name"`
 }
 
 // Upload uploads files to Analyze service
 func (s *service) Upload(userID null.Int, req *UploadRequest) (*model.Project, error) {
-	files := &model.UploadedData{
-		CartfileContent:    req.CartfileContent,
-		PodfileLockContent: req.PodfileLockContent,
-		RepositoryName:     req.RepositoryName,
+	if req.CartfileContent == nil && req.PodfileLockContent == nil {
+		return nil, errors.New("")
 	}
 
-	return s.ProjectStore.Upload(userID, files)
+	data := &model.UploadedData{}
+
+	if s, err := toBase64(req.PodfileLockContent); utf8.RuneCountInString(s) != 0 && err == nil {
+		data.PodfileLockContent = s
+	}
+
+	if s, err := toBase64(req.CartfileContent); utf8.RuneCountInString(s) != 0 && err == nil {
+		data.CartfileContent = s
+	}
+
+	if isEmpty(data.CartfileContent) && isEmpty(data.PodfileLockContent) {
+		return nil, errors.New("")
+	}
+
+	return s.ProjectStore.Upload(userID, data)
+}
+
+func toBase64(file io.Reader) (string, error) {
+	b := make([]byte, 1024)
+
+	if n, err := file.Read(b); n == 0 || err != nil {
+		return "", errors.Wrap(err, 0)
+	}
+
+	encoded := base64.StdEncoding.EncodeToString(b)
+
+	return encoded, nil
+}
+
+func isEmpty(s string) bool {
+	return utf8.RuneCountInString(s) == 0
 }

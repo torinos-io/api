@@ -24,17 +24,22 @@ func CreateProject(c *gin.Context) {
 		ProjectStore: projectStore,
 	})
 
-	cartfile, cartErr := c.FormFile("cartfile_content")
-	podfile, podErr := c.FormFile("podfile_content")
+	cartfileHeader, cartErr := c.FormFile("cartfile_content")
+	podfileHeader, podErr := c.FormFile("podfile_content")
 
 	if cartErr != nil && podErr != nil {
 		c.AbortWithError(http.StatusUnprocessableEntity, errors.New("Podfile and Cartfile is empty"))
 		return
 	}
 
-	uploadRequest := &project_service.UploadRequest{
-		CartfileContent:    cartfile,
-		PodfileLockContent: podfile,
+	request := &project_service.UploadRequest{}
+
+	if cartFile, err := cartfileHeader.Open(); err == nil {
+		request.CartfileContent = cartFile
+	}
+
+	if podFile, err := podfileHeader.Open(); err == nil {
+		request.PodfileLockContent = podFile
 	}
 
 	var project *model.Project
@@ -47,7 +52,7 @@ func CreateProject(c *gin.Context) {
 		userID.Valid = true
 	}
 
-	service.Upload(userID, uploadRequest)
+	service.Upload(userID, request)
 	if err != nil {
 		c.Error(err)
 		return

@@ -1,10 +1,8 @@
 package model
 
-import "mime/multipart"
-
 // UploadedData contains file uploaded files
 type UploadedData struct {
-	CartfileContent    *multipart.FileHeader
-	PodfileLockContent *multipart.FileHeader
+	CartfileContent    string
+	PodfileLockContent string
 	RepositoryName     string
 }
