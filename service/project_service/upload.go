@@ -9,6 +9,7 @@ import (
 	"github.com/guregu/null"
 
 	"github.com/torinos-io/api/type/model"
+	"io/ioutil"
 )
 
 // UploadRequest holds uploaded files
@@ -25,21 +26,16 @@ func (s *service) Upload(userID null.Int, req *UploadRequest) (*model.Project, e
 	}
 
 	data := &model.UploadedData{}
-
 	if s, err := toBase64(req.PodfileLockContent); utf8.RuneCountInString(s) != 0 && err == nil {
 		data.PodfileLockContent = s
 	}
-
 	if s, err := toBase64(req.CartfileContent); utf8.RuneCountInString(s) != 0 && err == nil {
 		data.CartfileContent = s
 	}
-
 	data.RepositoryName = req.RepositoryName
-
 	if isEmpty(data.CartfileContent) && isEmpty(data.PodfileLockContent) {
 		return nil, errors.New("CartFile and PodFile are both empty")
 	}
-
 	if isEmpty(data.RepositoryName) {
 		return nil, errors.New("Repository name is empty")
 	}
@@ -47,10 +43,10 @@ func (s *service) Upload(userID null.Int, req *UploadRequest) (*model.Project, e
 	return s.ProjectStore.Upload(userID, data)
 }
 
-func toBase64(file io.Reader) (string, error) {
-	b := make([]byte, 1024)
+func toBase64(buffer io.Reader) (string, error) {
+	b, err := ioutil.ReadAll(buffer)
 
-	if n, err := file.Read(b); n == 0 || err != nil {
+	if err != nil {
 		return "", errors.Wrap(err, 0)
 	}
 
@@ -60,5 +56,5 @@ func toBase64(file io.Reader) (string, error) {
 }
 
 func isEmpty(s string) bool {
-	return utf8.RuneCountInString(s) == 0
+	return s == ""
 }

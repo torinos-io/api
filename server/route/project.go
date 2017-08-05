@@ -26,7 +26,7 @@ func CreateProject(c *gin.Context) {
 	podfileHeader, podErr := c.FormFile("podfile_content")
 
 	if cartErr != nil && podErr != nil {
-		c.AbortWithError(http.StatusUnprocessableEntity, errors.New("Podfile and Cartfile is empty"))
+		c.Error(errors.New("Podfile and Cartfile is empty"))
 		return
 	}
 

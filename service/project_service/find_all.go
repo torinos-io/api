@@ -12,6 +12,6 @@ type FindAllRequest struct {
 }
 
 // FindAll returns all projects related to given user id
-func (s *service) FindAll(req *FindAllRequest) (*[]model.Project, error) {
+func (s *service) FindAll(req *FindAllRequest) ([]*model.Project, error) {
 	return s.ProjectStore.GetAllProjectsByUserID(req.UserID)
 }

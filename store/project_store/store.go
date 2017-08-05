@@ -16,7 +16,7 @@ type concreteStore struct {
 // Store is an interface for CRUD category records
 type Store interface {
 	Upload(userID null.Int, files *model.UploadedData) (*model.Project, error)
-	GetAllProjectsByUserID(userID null.Int) (*[]model.Project, error)
+	GetAllProjectsByUserID(userID null.Int) ([]*model.Project, error)
 	GetProjectByProjectUUID(uuid string) (*model.Project, error)
 }
 
@@ -58,8 +58,8 @@ func (s *concreteStore) Upload(userID null.Int, data *model.UploadedData) (*mode
 }
 
 // GetAllProjectsByUserID returns all projects
-func (s *concreteStore) GetAllProjectsByUserID(userID null.Int) (*[]model.Project, error) {
-	projects := &[]model.Project{}
+func (s *concreteStore) GetAllProjectsByUserID(userID null.Int) ([]*model.Project, error) {
+	projects := []*model.Project{}
 	finder := s.db.Where("user_id = ?", userID).Find(projects)
 
 	if err := finder.Error; err != nil {

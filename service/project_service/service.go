@@ -17,7 +17,7 @@ type Context struct {
 // Service is an interface for authentication
 type Service interface {
 	Find(req *FindRequest) (*model.Project, error)
-	FindAll(req *FindAllRequest) (*[]model.Project, error)
+	FindAll(req *FindAllRequest) ([]*model.Project, error)
 	Upload(userID null.Int, req *UploadRequest) (*model.Project, error)
 }
 
