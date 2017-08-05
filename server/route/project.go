@@ -47,18 +47,16 @@ func CreateProject(c *gin.Context) {
 	var project *model.Project
 	var err error
 
+	userID := null.Int{}
+
 	if user := middleware.GetCurrentUser(c); user != nil {
-		p, e := service.Upload(null.IntFrom(int64(user.ID)), uploadRequest)
-		project = p
-		err = e
-	} else {
-		p, e := service.Upload(null.Int{}, uploadRequest)
-		project = p
-		err = e
+		userID.Int64 = int64(user.ID)
+		userID.Valid = true
 	}
 
+	service.Upload(userID, uploadRequest)
 	if err != nil {
-		c.AbortWithError(http.StatusUnprocessableEntity, err)
+		c.Error(err)
 		return
 	}
 
