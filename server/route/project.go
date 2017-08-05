@@ -86,7 +86,7 @@ func GetProject(c *gin.Context) {
 	project, err := service.Find(request)
 
 	if err != nil {
-		c.AbortWithError(http.StatusNotFound, err)
+		c.Error(err)
 		return
 	}
 
@@ -116,7 +116,7 @@ func ListProjects(c *gin.Context) {
 	projects, err := service.FindAll(request)
 
 	if err != nil {
-		c.AbortWithError(http.StatusNotFound, err)
+		c.Error(err)
 		return
 	}
 
