@@ -39,8 +39,8 @@ func Subscribe(c *gin.Context) {
 	c.JSON(http.StatusOK, subscription)
 }
 
-// UnSubscribe subscription
-func UnSubscribe(c *gin.Context) {
+// Unsubscribe subscription
+func Unsubscribe(c *gin.Context) {
 	ac := middleware.GetAppContext(c)
 	subscriptionStore := subscription_store.New(ac.MainDB)
 	service := subscription_service.New(subscription_service.Context{
