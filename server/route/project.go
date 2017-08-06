@@ -22,22 +22,38 @@ func CreateProject(c *gin.Context) {
 		ProjectStore: projectStore,
 	})
 
-	cartfileHeader, cartErr := c.FormFile("cartfile_content")
-	podfileHeader, podErr := c.FormFile("podfile_content")
-
-	if cartErr != nil && podErr != nil {
-		c.Error(errors.New("Podfile and Cartfile is empty"))
-		return
-	}
-
 	request := &project_service.UploadRequest{}
 
-	if cartFile, err := cartfileHeader.Open(); err == nil {
-		request.CartfileContent = cartFile
+	{
+		header, err := c.FormFile("cartfile_content")
+		if err != nil {
+			c.Error(errors.New("Cartfile is empty"))
+			return
+		}
+
+		file, err := header.Open()
+		if err != nil {
+			c.Error(errors.Wrap(err, 0))
+			return
+		}
+
+		request.CartfileContent = file
 	}
 
-	if podFile, err := podfileHeader.Open(); err == nil {
-		request.PodfileLockContent = podFile
+	{
+		header, err := c.FormFile("podfile_content")
+		if err != nil {
+			c.Error(errors.New("Podfile is empty"))
+			return
+		}
+
+		file, err := header.Open()
+		if err != nil {
+			c.Error(errors.Wrap(err, 0))
+			return
+		}
+
+		request.PodfileLockContent = file
 	}
 
 	name, _ := c.GetPostForm("repository_name")
@@ -45,7 +61,6 @@ func CreateProject(c *gin.Context) {
 	request.RepositoryName = name
 
 	userID := null.Int{}
-
 	if user := middleware.GetCurrentUser(c); user != nil {
 		userID.Int64 = int64(user.ID)
 		userID.Valid = true

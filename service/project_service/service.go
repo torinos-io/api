@@ -1,8 +1,6 @@
 package service
 
 import (
-	"github.com/guregu/null"
-
 	project_store "github.com/torinos-io/api/store/project_store"
 	"github.com/torinos-io/api/type/model"
 	"github.com/torinos-io/api/type/system"
