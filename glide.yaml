@@ -33,3 +33,5 @@ import:
   - publicsuffix
 - package: github.com/satori/go.uuid
   version: v1.1.0
+- package: github.com/asaskevich/govalidator
+  version: v6

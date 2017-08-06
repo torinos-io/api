@@ -1,8 +1,8 @@
-hash: 4a57e0942d9209e27d1121f72e397dbac5e750082d891ad4839749c19a4686c8
-updated: 2017-07-23T08:48:03.673438398Z
+hash: 946feb83ebd2e77063549f75ab4e59f42804de5da842681f07e36785cb31a8b1
+updated: 2017-08-06T06:43:16.948983656Z
 imports:
 - name: github.com/asaskevich/govalidator
-  version: aa5cce4a76edb1a5acecab1870c17abbffb5419e
+  version: 4918b99a7cb949bb295f3c7bbaf24b577d806e35
 - name: github.com/creasty/configo
   version: 7c5b248ed88ee439b1c0869f05fcf6415a7deeea
 - name: github.com/creasty/gin-contrib
@@ -67,7 +67,7 @@ imports:
 - name: github.com/pborman/uuid
   version: e790cca94e6cc75c7064b1332e63811d4aae1a53
 - name: github.com/rs/cors
-  version: 8dd4211afb5d08dbb39a533b9bb9e4b486351df6
+  version: 7af7a1e09ba336d2ea14b1ce73bf693c6837dbf6
 - name: github.com/satori/go.uuid
   version: 879c5887cd475cd7864858769793b2ceb0d44feb
 - name: github.com/shirou/gopsutil

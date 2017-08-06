@@ -50,7 +50,7 @@ func CreateProject(c *gin.Context) {
 		userID.Int64 = int64(user.ID)
 		userID.Valid = true
 	}
-	
+
 	request.UserID = userID
 
 	if project, err := service.Upload(request); err != nil {
