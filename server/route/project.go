@@ -50,8 +50,10 @@ func CreateProject(c *gin.Context) {
 		userID.Int64 = int64(user.ID)
 		userID.Valid = true
 	}
+	
+	request.UserID = userID
 
-	if project, err := service.Upload(userID, request); err != nil {
+	if project, err := service.Upload(request); err != nil {
 		c.Error(err)
 	} else {
 		c.JSON(http.StatusOK, project)
