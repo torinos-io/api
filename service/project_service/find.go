@@ -9,12 +9,12 @@ import (
 
 // FindRequest is a request object for finds project
 type FindRequest struct {
-	UUID string `json:"uuid" valid:"uuid"`
+	UUID string `json:"uuid" valid:"uuidv4"`
 }
 
 // Find returns project for given uuid
 func (s *service) Find(req *FindRequest) (*model.Project, error) {
-	if !govalidator.IsUUID(req.UUID) {
+	if !govalidator.IsUUIDv4(req.UUID) {
 		return nil, errors.New("UUID is empty")
 	}
 
