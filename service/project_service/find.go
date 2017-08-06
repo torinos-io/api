@@ -1,20 +1,20 @@
 package service
 
 import (
-	"unicode/utf8"
-
+	"github.com/asaskevich/govalidator"
 	"github.com/go-errors/errors"
+
 	"github.com/torinos-io/api/type/model"
 )
 
 // FindRequest is a request object for finds project
 type FindRequest struct {
-	UUID string `json:"uuid"`
+	UUID string `json:"uuid" valid:"uuid"`
 }
 
 // Find returns project for given uuid
 func (s *service) Find(req *FindRequest) (*model.Project, error) {
-	if utf8.RuneCountInString(req.UUID) == 0 {
+	if !govalidator.IsUUID(req.UUID) {
 		return nil, errors.New("UUID is empty")
 	}
 
