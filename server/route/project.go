@@ -59,7 +59,7 @@ func CreateProject(c *gin.Context) {
 	name, _ := c.GetPostForm("repository_name")
 
 	request.RepositoryName = name
-	
+
 	if user := middleware.GetCurrentUser(c); user != nil {
 		request.UserID.Int64 = int64(user.ID)
 		request.UserID.Valid = true

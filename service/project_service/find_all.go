@@ -8,7 +8,7 @@ import (
 
 // FindAllRequest is a request object for finds all projects
 type FindAllRequest struct {
-	UserID null.Int `json:"user_id"`
+	UserID null.Int `json:"-"`
 }
 
 // FindAll returns all projects related to given user id

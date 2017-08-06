@@ -14,7 +14,7 @@ import (
 
 // UploadRequest holds uploaded files
 type UploadRequest struct {
-	UserID             null.Int  `json:"user_id"`
+	UserID             null.Int  `json:"-"`
 	CartfileContent    io.Reader `json:"-"`
 	PodfileLockContent io.Reader `json:"-"`
 	RepositoryName     string    `json:"repository_name"`
