@@ -14,8 +14,8 @@ type FindRequest struct {
 
 // Find returns project for given uuid
 func (s *service) Find(req *FindRequest) (*model.Project, error) {
-	if !govalidator.IsUUIDv4(req.UUID) {
-		return nil, errors.New("UUID is empty")
+	if validated, err := govalidator.ValidateStruct(req); !validated || err != nil {
+		return nil, errors.Wrap(err, 0)
 	}
 
 	return s.ProjectStore.GetProjectByProjectUUID(req.UUID)
