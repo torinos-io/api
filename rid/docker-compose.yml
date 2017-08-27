@@ -20,6 +20,8 @@ services:
     image: postgres:9.6.1-alpine
     volumes:
       - ../tmp/torinos_db:/var/lib/postgresql/data
+      - ..:/app
+    working_dir: /app
     expose:
       - 5432
     ports:
