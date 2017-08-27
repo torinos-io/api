@@ -15,6 +15,12 @@ Install Docker, docker-compose and https://github.com/creasty/rid.
 $ rid compose pull
 ```
 
+```
+$ rid script/migrate
+$ rid compose exec torinos_db psql -t maindb -f data/seeds/users.sql
+$ rid compose exec torinos_db psql -t maindb -f data/seeds/projects.sql
+```
+
 
 Run
 ---
