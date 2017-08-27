@@ -14,7 +14,7 @@ type FindRequest struct {
 
 // Find returns project for given uuid
 func (s *service) Find(req *FindRequest) (*model.Project, error) {
-	if validated, err := govalidator.ValidateStruct(req); !validated || err != nil {
+	if _, err := govalidator.ValidateStruct(req); err != nil {
 		return nil, errors.Wrap(err, 0)
 	}
 
