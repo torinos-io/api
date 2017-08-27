@@ -27,9 +27,9 @@ func Subscribe(c *gin.Context) {
 		return
 	}
 
-	user := middleware.GetCurrentUser(c)
+	req.User = middleware.GetCurrentUser(c)
 
-	subscription, err := service.Subscribe(req, user)
+	subscription, err := service.Subscribe(req)
 
 	if err != nil {
 		c.Error(err)

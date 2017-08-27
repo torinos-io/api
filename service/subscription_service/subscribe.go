@@ -10,13 +10,14 @@ import (
 type SubscribeRequest struct {
 	ProjectUUID string
 	Email       string
+	User        *model.User `json:"-"`
 }
 
 // Subscribe performs subscribe project update
-func (s *service) Subscribe(req *SubscribeRequest, user *model.User) (*model.Subscription, error) {
+func (s *service) Subscribe(req *SubscribeRequest) (*model.Subscription, error) {
 	var userID null.Int
 
-	if user != nil {
+	if user := req.User; user != nil {
 		userID = null.IntFrom(int64(user.ID))
 	}
 

@@ -14,8 +14,8 @@ type Context struct {
 
 // Service is an interface for authentication
 type Service interface {
-	Subscribe(req *SubscribeRequest, user *model.User) (*model.Subscription, error)
-	UnSubscribe(req *UnSubscribeRequest, user *model.User) error
+	Subscribe(req *SubscribeRequest) (*model.Subscription, error)
+	UnSubscribe(req *UnSubscribeRequest) error
 }
 
 type service struct {
