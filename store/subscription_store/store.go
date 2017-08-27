@@ -1,7 +1,6 @@
 package store
 
 import (
-	"regexp"
 	"time"
 
 	"github.com/go-errors/errors"
@@ -10,8 +9,6 @@ import (
 
 	"github.com/torinos-io/api/type/model"
 )
-
-var emailPattern = regexp.MustCompile(`^(?i:[^ @"<>]+|".*")@(?i:[a-z1-9.])+.(?i:[a-z])+$`)
 
 type concreteStore struct {
 	db *gorm.DB
@@ -40,10 +37,6 @@ func (s *concreteStore) CreateSubscription(userID null.Int, email string, projec
 
 	if err := finder.Error; err != nil && err != gorm.ErrRecordNotFound {
 		return subscription, errors.Wrap(err, 0)
-	}
-
-	if !emailPattern.MatchString(email) {
-		return subscription, errors.New("Invalid email")
 	}
 
 	subscription.UserID = userID
