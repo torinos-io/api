@@ -53,9 +53,9 @@ func Unsubscribe(c *gin.Context) {
 		c.Error(errors.Wrap(err, 0))
 		return
 	}
-	user := middleware.GetCurrentUser(c)
+	req.User = middleware.GetCurrentUser(c)
 
-	if err := service.UnSubscribe(req, user); err != nil {
+	if err := service.UnSubscribe(req); err != nil {
 		c.Error(err)
 		return
 	}

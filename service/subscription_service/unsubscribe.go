@@ -8,14 +8,15 @@ import (
 
 // UnSubscribeRequest holds target project uuid
 type UnSubscribeRequest struct {
+	User        *model.User `json:"-"`
 	ProjectUUID string
 }
 
 // UnSubscribe performs unsubscribe project
-func (s *service) UnSubscribe(req *UnSubscribeRequest, user *model.User) error {
+func (s *service) UnSubscribe(req *UnSubscribeRequest) error {
 	var userID null.Int
 
-	if user != nil {
+	if user := req.User; user != nil {
 		userID = null.IntFrom(int64(user.ID))
 	}
 
